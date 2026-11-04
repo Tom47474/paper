@@ -1,0 +1,432 @@
+\begin{thebibliography}{57}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Xue et~al.(2025)Xue, Huang, Xiao, Li, and Wang]{10824862}
+Lingyan Xue, Haiping Huang, Fu~Xiao, Qi~Li, and Zhiwei Wang.
+\newblock A privacy-enhanced traceable anonymous transaction scheme for
+  blockchain.
+\newblock \emph{IEEE Transactions on Information Forensics and Security},
+  20:\penalty0 1176--1191, 2025.
+
+\bibitem[Akanfe et~al.(2024)Akanfe, Lawong, and Rao]{akanfe2024blockchain}
+Oluwafemi Akanfe, Diane Lawong, and H~Raghav Rao.
+\newblock Blockchain technology and privacy regulation: Reviewing frictions and
+  synthesizing opportunities.
+\newblock \emph{International Journal of Information Management}, 76:\penalty0
+  102753, 2024.
+
+\bibitem[Jie et~al.(2023)Jie, Qiu, Koe, Li, Wang, Wu, Li, and
+  Zheng]{jie2023secure}
+Wanqing Jie, Wangjie Qiu, Arthur Sandor~Voundi Koe, Jianhong Li, Yin Wang, Yaqi
+  Wu, Jin Li, and Zhiming Zheng.
+\newblock A secure and flexible blockchain-based offline payment protocol.
+\newblock \emph{IEEE Transactions on Computers}, 73\penalty0 (2):\penalty0
+  408--421, 2023.
+
+\bibitem[Lin et~al.(2024)Lin, Wu, Zhou, Zhao, Li, and Xiong]{lin2024computing}
+Li~Lin, Jiapeng Wu, Zhi Zhou, Jin Zhao, Peng Li, and Jinbo Xiong.
+\newblock Computing power networking meets blockchain: A reputation-enhanced
+  trading framework for decentralized iot cloud services.
+\newblock \emph{IEEE Internet of Things Journal}, 11\penalty0 (10):\penalty0
+  17082--17096, 2024.
+
+\bibitem[Huang et~al.(2025)Huang, Li, Wu, Xue, Li, Lin, Nie, Liu, Liu,
+  Michalski, et~al.]{huang2025blockchain}
+Yuming Huang, Xiangyu Li, Yuehan Wu, Chaoyang Xue, Jiashuo Li, Yongfeng Lin,
+  Wei Nie, Xian Liu, Qian Liu, Greg Michalski, et~al.
+\newblock Blockchain-based isotopic big data-driven tracing of global pm
+  sources and interventions.
+\newblock \emph{Nature Communications}, 16\penalty0 (1):\penalty0 3901, 2025.
+
+\bibitem[Zhang et~al.(2023)Zhang, Le, Lei, Xiang, and Liao]{zhang2023secure}
+Di~Zhang, Junqing Le, Xinyu Lei, Tao Xiang, and Xiaofeng Liao.
+\newblock Secure redactable blockchain with dynamic support.
+\newblock \emph{IEEE Transactions on Dependable and Secure Computing},
+  21\penalty0 (2):\penalty0 717--731, 2023.
+
+\bibitem[Xu et~al.(2023{\natexlab{a}})Xu, Wang, and Jia]{xu2023survey}
+Jie Xu, Cong Wang, and Xiaohua Jia.
+\newblock A survey of blockchain consensus protocols.
+\newblock \emph{ACM Computing Surveys}, 55\penalty0 (13s):\penalty0 1--35,
+  2023{\natexlab{a}}.
+
+\bibitem[Gan and Lau(2024)]{gan2024trust}
+QingQiu Gan and Raymond Yiu~Keung Lau.
+\newblock Trust in a `trust-free'system: Blockchain acceptance in the banking
+  and finance sector.
+\newblock \emph{Technological forecasting and social change}, 199:\penalty0
+  123050, 2024.
+
+\bibitem[Javaid et~al.(2022)Javaid, Haleem, Singh, Suman, and
+  Khan]{javaid2022review}
+Mohd Javaid, Abid Haleem, Ravi~Pratap Singh, Rajiv Suman, and Shahbaz Khan.
+\newblock A review of blockchain technology applications for financial
+  services.
+\newblock \emph{BenchCouncil transactions on benchmarks, standards and
+  evaluations}, 2\penalty0 (3):\penalty0 100073, 2022.
+
+\bibitem[Chen et~al.(2021)Chen, Shu, Huang, Huang, Liu, Liu, and
+  Lei]{chen2021bidm}
+Ruibiao Chen, Fangxing Shu, Shuokang Huang, Lei Huang, Huafang Liu, Jin Liu,
+  and Kai Lei.
+\newblock Bidm: A blockchain-enabled cross-domain identity management system.
+\newblock \emph{Journal of Communications and Information Networks}, 6\penalty0
+  (1):\penalty0 44--58, 2021.
+
+\bibitem[Cui et~al.(2023)Cui, Li, Zhang, Zhong, Gu, and He]{cui2023dschain}
+Jie Cui, Yatao Li, Qingyang Zhang, Hong Zhong, Chengjie Gu, and Debiao He.
+\newblock Dschain: A blockchain system for complete lifecycle security of data
+  in internet of things.
+\newblock \emph{IEEE Transactions on Dependable and Secure Computing},
+  21\penalty0 (4):\penalty0 3977--3993, 2023.
+
+\bibitem[Ramzan et~al.(2022)Ramzan, Aqdus, Ravi, Koundal, Amin, and
+  Al~Ghamdi]{ramzan2022healthcare}
+Sadia Ramzan, Aqsa Aqdus, Vinayakumar Ravi, Deepika Koundal, Rashid Amin, and
+  Mohammed~A Al~Ghamdi.
+\newblock Healthcare applications using blockchain technology: Motivations and
+  challenges.
+\newblock \emph{IEEE Transactions on Engineering Management}, 70\penalty0
+  (8):\penalty0 2874--2890, 2022.
+
+\bibitem[Gai et~al.(2022)Gai, Zhang, Qiu, and
+  Thuraisingham]{gaiblock2022blockchain}
+Keke Gai, Yue Zhang, Meikang Qiu, and Bhavani Thuraisingham.
+\newblock Blockchain-enabled service optimizations in supply chain digital
+  twin.
+\newblock \emph{IEEE Transactions on Services Computing}, 16\penalty0
+  (3):\penalty0 1673--1685, 2022.
+
+\bibitem[Gai et~al.(2019)Gai, Wu, Zhu, Qiu, and Shen]{gai2019privacy}
+Keke Gai, Yulu Wu, Liehuang Zhu, Meikang Qiu, and Meng Shen.
+\newblock Privacy-preserving energy trading using consortium blockchain in
+  smart grid.
+\newblock \emph{IEEE Transactions on Industrial Informatics}, 15\penalty0
+  (6):\penalty0 3548--3558, 2019.
+
+\bibitem[Huang et~al.(2022)Huang, Kong, Cheng, Dai, Qiu, Chen, Liu, and
+  Huang]{huang2022blocksense}
+Junqin Huang, Linghe Kong, Long Cheng, Hong-Ning Dai, Meikang Qiu, Guihai Chen,
+  Xue Liu, and Gang Huang.
+\newblock Blocksense: Towards trustworthy mobile crowdsensing via proof-of-data
+  blockchain.
+\newblock \emph{IEEE Transactions on Mobile Computing}, 23\penalty0
+  (2):\penalty0 1016--1033, 2022.
+
+\bibitem[El~Sayed et~al.(2024)El~Sayed, Abdelaziz, Hussein, and
+  Elbayoumy]{el2024ddos}
+Ammar~Ibrahim El~Sayed, Mahmoud Abdelaziz, Mohamed Hussein, and Ashraf~D
+  Elbayoumy.
+\newblock Ddos mitigation in iot using machine learning and blockchain
+  integration.
+\newblock \emph{IEEE Networking Letters}, 2024.
+
+\bibitem[Deebak et~al.(2022)Deebak, Memon, Khowaja, Dev, Wang, Qureshi, and
+  Su]{deebak2022lightweight}
+Bakkiam~David Deebak, Fida~Hussain Memon, Sunder~Ali Khowaja, Kapal Dev,
+  Weizheng Wang, Nawab Muhammad~Faseeh Qureshi, and Chunhua Su.
+\newblock A lightweight blockchain-based remote mutual authentication for
+  ai-empowered iot sustainable computing systems.
+\newblock \emph{IEEE Internet of Things Journal}, 10\penalty0 (8):\penalty0
+  6652--6660, 2022.
+
+\bibitem[Wang et~al.(2019)Wang, Taha, Wang, Kvaternik, and
+  Hahn]{wang2019energy}
+Shen Wang, Ahmad~F Taha, Jianhui Wang, Karla Kvaternik, and Adam Hahn.
+\newblock Energy crowdsourcing and peer-to-peer energy trading in
+  blockchain-enabled smart grids.
+\newblock \emph{IEEE Transactions on Systems, Man, and Cybernetics: Systems},
+  49\penalty0 (8):\penalty0 1612--1623, 2019.
+
+\bibitem[Zhou et~al.(2019)Zhou, Wang, Dong, and Ota]{zhou2019secure}
+Zhenyu Zhou, Bingchen Wang, Mianxiong Dong, and Kaoru Ota.
+\newblock Secure and efficient vehicle-to-grid energy trading in cyber physical
+  systems: Integration of blockchain and edge computing.
+\newblock \emph{IEEE Transactions on Systems, Man, and Cybernetics: Systems},
+  50\penalty0 (1):\penalty0 43--57, 2019.
+
+\bibitem[Khoa et~al.(2024)Khoa, Son, Hoang, Trung, Quynh, Nguyen, Ha, and
+  Dutkiewicz]{khoa2024collaborative}
+Tran~Viet Khoa, Do~Hai Son, Dinh~Thai Hoang, Nguyen~Linh Trung, Tran Thi~Thuy
+  Quynh, Diep~N Nguyen, Nguyen~Viet Ha, and Eryk Dutkiewicz.
+\newblock Collaborative learning for cyberattack detection in blockchain
+  networks.
+\newblock \emph{IEEE Transactions on Systems, Man, and Cybernetics: Systems},
+  54\penalty0 (7):\penalty0 3920--3933, 2024.
+
+\bibitem[Park and Song(2024)]{park2024watchdog}
+Gi~Seok Park and Hwangjun Song.
+\newblock Watchdog: Network-aware consensus protocol for enhancing scalability
+  of public blockchains.
+\newblock \emph{IEEE Internet of Things Journal}, 2024.
+
+\bibitem[Choi et~al.(2023)Choi, Beillahi, Singh, Michalopoulos, Li, Veneris,
+  and Long]{choi2023lmpt}
+Jemin~Andrew Choi, Sidi~Mohamed Beillahi, Srisht~Fateh Singh, Panagiotis
+  Michalopoulos, Peilun Li, Andreas Veneris, and Fan Long.
+\newblock Lmpt: A novel authenticated data structure to eliminate storage
+  bottlenecks for high performance blockchains.
+\newblock \emph{IEEE Transactions on Network and Service Management},
+  21\penalty0 (2):\penalty0 1333--1343, 2023.
+
+\bibitem[Liu et~al.(2021)Liu, Wan, Shao, and Yu]{liu2021hypermaze}
+Wei Liu, Zhiguo Wan, Jun Shao, and Yong Yu.
+\newblock Hypermaze: Towards privacy-preserving and scalable permissioned
+  blockchain.
+\newblock \emph{IEEE Transactions on Dependable and Secure Computing},
+  20\penalty0 (1):\penalty0 360--376, 2021.
+
+\bibitem[Nakamoto(2008)]{nakamoto2008bitcoin}
+Satoshi Nakamoto.
+\newblock Bitcoin: A peer-to-peer electronic cash system.
+\newblock 2008.
+
+\bibitem[Buterin et~al.(2013)]{buterin2013ethereum}
+Vitalik Buterin et~al.
+\newblock Ethereum white paper.
+\newblock \emph{GitHub repository}, 1\penalty0 (22-23):\penalty0 5--7, 2013.
+
+\bibitem[Begum et~al.(2022)Begum, Munira, and Juthi]{begum2022systematic}
+Aklima Begum, Mosa Sumaiya~Khatun Munira, and Shaharima Juthi.
+\newblock Systematic review of blockchain technology in trade finance and
+  banking security.
+\newblock \emph{American Journal of Scholarly Research and Innovation},
+  1\penalty0 (01):\penalty0 25--52, 2022.
+
+\bibitem[Ni et~al.(2022)Ni, Linfeng, Zhu, and Ali]{ni2022novel}
+Qinyin Ni, Zhang Linfeng, Xiaorong Zhu, and Inayat Ali.
+\newblock A novel design method of high throughput blockchain for 6g networks:
+  Performance analysis and optimization model.
+\newblock \emph{IEEE Internet of Things Journal}, 9\penalty0 (24):\penalty0
+  25643--25659, 2022.
+
+\bibitem[An et~al.(2024)An, Zhang, Wang, Fan, Gao, Li, Lu, Li, and
+  Liu]{an2024rlchain}
+Min An, Xuan Zhang, Jishu Wang, Qiyuan Fan, Chen Gao, Linyu Li, Cuizhen Lu, Nan
+  Li, and Yingchen Liu.
+\newblock Rlchain: A drl approach for blockchain performance optimization
+  towards iiot.
+\newblock \emph{IEEE Transactions on Network and Service Management}, 2024.
+
+\bibitem[Chen et~al.(2019)Chen, Wu, Liang, Mumtaz, Li, Konstantin, Bashir, and
+  Nawaz]{chen2019collaborative}
+Jianing Chen, Jun Wu, Haoran Liang, Shahid Mumtaz, Jianhua Li, Kostromitin
+  Konstantin, Ali~Kashif Bashir, and Raheel Nawaz.
+\newblock Collaborative trust blockchain based unbiased control transfer
+  mechanism for industrial automation.
+\newblock \emph{IEEE Transactions on Industry Applications}, 56\penalty0
+  (4):\penalty0 4478--4488, 2019.
+
+\bibitem[Yang et~al.(2022)Yang, Wu, Long, Liang, and Lin]{yang2022blockchain}
+Yuhan Yang, Jing Wu, Chengnian Long, Wei Liang, and Yi-Bing Lin.
+\newblock Blockchain-enabled multiparty computation for privacy preserving and
+  public audit in industrial iot.
+\newblock \emph{IEEE Transactions on Industrial Informatics}, 18\penalty0
+  (12):\penalty0 9259--9267, 2022.
+
+\bibitem[Liao et~al.(2024)Liao, Ding, Zhong, and Lei]{liao2024rt}
+Guoqiong Liao, Hao Ding, Chuanling Zhong, and Yinxiang Lei.
+\newblock Rt-dag: A dag-based blockchain supporting real-time transactions.
+\newblock \emph{IEEE Internet of Things Journal}, 2024.
+
+\bibitem[Xu et~al.(2023{\natexlab{b}})Xu, Xie, Peng, Wang, and
+  Jia]{xu2023adaptchain}
+Jie Xu, Qingyuan Xie, Sen Peng, Cong Wang, and Xiaohua Jia.
+\newblock Adaptchain: Adaptive scaling blockchain with transaction
+  deduplication.
+\newblock \emph{IEEE Transactions on Parallel and Distributed Systems},
+  34\penalty0 (6):\penalty0 1909--1922, 2023{\natexlab{b}}.
+
+\bibitem[Gao et~al.(2021)Gao, Huo, Wang, Huang, and Liu]{gao2021sharding}
+Ningjie Gao, Ru~Huo, Shuo Wang, Tao Huang, and Yunjie Liu.
+\newblock Sharding-hashgraph: A high-performance blockchain-based framework for
+  industrial internet of things with hashgraph mechanism.
+\newblock \emph{IEEE Internet of Things Journal}, 9\penalty0 (18):\penalty0
+  17070--17079, 2021.
+
+\bibitem[Zhang et~al.(2021)Zhang, Sun, Xu, Lu, Ning, Zhang, and
+  Yang]{zhang2021trustworthy}
+Weishan Zhang, Gang Sun, Liang Xu, Qinghua Lu, Huansheng Ning, Peiying Zhang,
+  and Su~Yang.
+\newblock A trustworthy safety inspection framework using performance-security
+  balanced blockchain.
+\newblock \emph{IEEE Internet of Things Journal}, 9\penalty0 (11):\penalty0
+  8178--8190, 2021.
+
+\bibitem[Dai et~al.(2024)Dai, Zhang, Guo, Ding, Xiao, Xie, Hao, and
+  Jin]{dai2024wahoo}
+Xiaohai Dai, Zhaonan Zhang, Zhengxuan Guo, Chaozheng Ding, Jiang Xiao, Xia Xie,
+  Rui Hao, and Hai Jin.
+\newblock Wahoo: A dag-based bft consensus with low latency and low
+  communication overhead.
+\newblock \emph{IEEE Transactions on Information Forensics and Security}, 2024.
+
+\bibitem[Chen et~al.(2023)Chen, Cheng, Xu, and Cao]{chen2023decision}
+Jinmian Chen, Yukun Cheng, Zhiqi Xu, and Yan Cao.
+\newblock Decision on block size in blockchain systems by evolutionary
+  equilibrium analysis.
+\newblock \emph{Theoretical Computer Science}, 942:\penalty0 93--106, 2023.
+
+\bibitem[Monem et~al.(2024)Monem, Hossain, Alam, Munir, Rahman, AlQahtani,
+  Almutlaq, and Hassan]{monem2024sustainable}
+Maruf Monem, Md~Tamjid Hossain, Md~Golam~Rabiul Alam, Md~Shirajum Munir,
+  Md~Mahbubur Rahman, Salman~A AlQahtani, Samah Almutlaq, and Mohammad~Mehedi
+  Hassan.
+\newblock A sustainable bitcoin blockchain network through introducing dynamic
+  block size adjustment using predictive analytics.
+\newblock \emph{Future Generation Computer Systems}, 153:\penalty0 12--26,
+  2024.
+
+\bibitem[Jamil et~al.(2022)Jamil, Ahmad, Whangbo, Muthanna, and
+  Kim]{jamil2022improving}
+Faisal Jamil, Shabir Ahmad, Taeg~Keun Whangbo, Ammar Muthanna, and Do-Hyeun
+  Kim.
+\newblock Improving blockchain performance in clinical trials using intelligent
+  optimal transaction traffic control mechanism in smart healthcare
+  applications.
+\newblock \emph{Computers \& Industrial Engineering}, 170:\penalty0 108327,
+  2022.
+
+\bibitem[Chen et~al.(2022)Chen, Nguyen, and Sekiya]{chen2022latency}
+Xuan Chen, Kien Nguyen, and Hiroo Sekiya.
+\newblock On the latency performance in private blockchain networks.
+\newblock \emph{IEEE Internet of Things Journal}, 9\penalty0 (19):\penalty0
+  19246--19259, 2022.
+
+\bibitem[Wilhelmi et~al.(2022)Wilhelmi, Barrachina-Mu{\~n}oz, and
+  Dini]{wilhelmi2022end}
+Francesc Wilhelmi, Sergio Barrachina-Mu{\~n}oz, and Paolo Dini.
+\newblock End-to-end latency analysis and optimal block size of proof-of-work
+  blockchain applications.
+\newblock \emph{IEEE Communications Letters}, 26\penalty0 (10):\penalty0
+  2332--2335, 2022.
+
+\bibitem[Wang et~al.(2022)Wang, Zhu, Miao, Zhu, Zhang, Tang, Huang, and
+  Gao]{wang2022bpr}
+Jishu Wang, Chao Zhu, Chen Miao, Rui Zhu, Xuan Zhang, Yahui Tang, Hexiang
+  Huang, and Chen Gao.
+\newblock Bpr: Blockchain-enabled efficient and secure parking reservation
+  framework with block size dynamic adjustment method.
+\newblock \emph{IEEE Transactions on Intelligent Transportation Systems},
+  24\penalty0 (3):\penalty0 3555--3570, 2022.
+
+\bibitem[Wang et~al.(2023)Wang, Wang, Zhang, Jin, Zhu, Li, Zhu, and
+  Lv]{wang2023learningchain}
+Jishu Wang, Yaowei Wang, Xuan Zhang, Zhi Jin, Chao Zhu, Linyu Li, Rui Zhu, and
+  Shenglong Lv.
+\newblock Learningchain: A highly scalable and applicable learning-based
+  blockchain performance optimization framework.
+\newblock \emph{IEEE Transactions on Network and Service Management},
+  21\penalty0 (2):\penalty0 1817--1831, 2023.
+
+\bibitem[Li et~al.(2023)Li, Wang, and Zhang]{li2023lb}
+Mingzhe Li, Wei Wang, and Jin Zhang.
+\newblock Lb-chain: Load-balanced and low-latency blockchain sharding via
+  account migration.
+\newblock \emph{IEEE Transactions on Parallel and Distributed Systems},
+  34\penalty0 (10):\penalty0 2797--2810, 2023.
+
+\bibitem[Wu et~al.(2026)Wu, Liu, Zhang, Sun, and Li]{wu2026fabrictca}
+Haibo Wu, Hui Liu, Lili Zhang, Yi~Sun, and Jianhui Li.
+\newblock Fabrictca: A two-level conflict avoidance approach to consortium
+  blockchains.
+\newblock \emph{Future Generation Computer Systems}, 174:\penalty0 108029,
+  2026.
+
+\bibitem[Ma et~al.(2026)Ma, Qu, Zhao, and Li]{ma2026mixchain}
+YuanYi Ma, Cheng Qu, He~Zhao, and Jing Li.
+\newblock Mixchain: An account-vessel hybrid model for high-performance
+  blockchain system.
+\newblock \emph{Future Generation Computer Systems}, page 108577, 2026.
+
+\bibitem[Li et~al.(2024)Li, Luo, Xue, Xue, Sun, and Li]{li2024secure}
+Meiqi Li, Xinyi Luo, Kaiping Xue, Yingjie Xue, Wentuo Sun, and Jian Li.
+\newblock A secure and efficient blockchain sharding scheme via hybrid
+  consensus and dynamic management.
+\newblock \emph{IEEE Transactions on Information Forensics and Security}, 2024.
+
+\bibitem[Islam et~al.(2025)Islam, Merlec, and In]{islam2025proof}
+Md~Mainul Islam, Mpyana~Mwamba Merlec, and Hoh~Peter In.
+\newblock Proof of random leader: A fast and manipulation-resistant
+  proof-of-authority consensus algorithm for permissioned blockchains using
+  verifiable random function.
+\newblock \emph{IEEE Transactions on Services Computing}, 2025.
+
+\bibitem[Cai et~al.(2022)Cai, Liang, Chen, Hong, Dai, Zhang, and
+  Zheng]{cai2022benzene}
+Zhongteng Cai, Junyuan Liang, Wuhui Chen, Zicong Hong, Hong-Ning Dai, Jianting
+  Zhang, and Zibin Zheng.
+\newblock Benzene: Scaling blockchain with cooperation-based sharding.
+\newblock \emph{IEEE Transactions on Parallel and Distributed Systems},
+  34\penalty0 (2):\penalty0 639--654, 2022.
+
+\bibitem[Yang et~al.(2024)Yang, Chen, Xue, Zou, and Huang]{yang2024ezchain}
+Wei Yang, Weilin Chen, Lide Xue, Wenjie Zou, and Liusheng Huang.
+\newblock Ezchain: A secure scalable blockchain protocol via passive sharding.
+\newblock \emph{IEEE Transactions on Dependable and Secure Computing}, 2024.
+
+\bibitem[Liu et~al.(2023)Liu, Xing, Cheng, Li, Guan, Liu, and
+  Wu]{liu2023flexible}
+Yizhong Liu, Xinxin Xing, Haosu Cheng, Dawei Li, Zhenyu Guan, Jianwei Liu, and
+  Qianhong Wu.
+\newblock A flexible sharding blockchain protocol based on cross-shard
+  byzantine fault tolerance.
+\newblock \emph{IEEE Transactions on Information Forensics and Security},
+  18:\penalty0 2276--2291, 2023.
+
+\bibitem[Jia et~al.(2024)Jia, Liu, Wang, and Sun]{jia2024estuary}
+Linpeng Jia, Yanxiu Liu, Keyuan Wang, and Yi~Sun.
+\newblock Estuary: A low cross-shard blockchain sharding protocol based on
+  state splitting.
+\newblock \emph{IEEE Transactions on Parallel and Distributed Systems},
+  35\penalty0 (3):\penalty0 405--420, 2024.
+
+\bibitem[Xu et~al.(2024)Xu, Ming, Wu, Wang, and Jia]{xu2024x}
+Jie Xu, Yulong Ming, Zihan Wu, Cong Wang, and Xiaohua Jia.
+\newblock X-shard: Optimistic cross-shard transaction processing for
+  sharding-based blockchains.
+\newblock \emph{IEEE Transactions on Parallel and Distributed Systems},
+  35\penalty0 (4):\penalty0 548--559, 2024.
+
+\bibitem[Tang et~al.(2026)Tang, Sun, and Wolter]{tang2026enhancing}
+Ziyue Tang, Jianping Sun, and Katinka Wolter.
+\newblock Enhancing multi-agent train control systems with permissioned
+  blockchain: A framework for efficient and low-latency ma generation.
+\newblock \emph{Future Generation Computer Systems}, 183:\penalty0 108564,
+  2026.
+
+\bibitem[Leng et~al.(2019)Leng, Yan, Liu, Xu, Zhao, Shi, Wei, Zhang, and
+  Chen]{leng2019manuchain}
+Jiewu Leng, Douxi Yan, Qiang Liu, Kailin Xu, J~Leon Zhao, Rui Shi, Lijun Wei,
+  Ding Zhang, and Xin Chen.
+\newblock Manuchain: Combining permissioned blockchain with a holistic
+  optimization model as bi-level intelligence for smart manufacturing.
+\newblock \emph{IEEE Transactions on Systems, Man, and Cybernetics: Systems},
+  50\penalty0 (1):\penalty0 182--192, 2019.
+
+\bibitem[Marsalek et~al.(2019)Marsalek, Zefferer, Fasllija, and
+  Ziegler]{marsalek2019tackling}
+Alexander Marsalek, Thomas Zefferer, Edona Fasllija, and Dominik Ziegler.
+\newblock Tackling data inefficiency: Compressing the bitcoin blockchain.
+\newblock In \emph{2019 18th IEEE international conference on trust, security
+  and privacy in computing and communications/13th IEEE international
+  conference on big data science and engineering (trustcom/bigdatase)}, pages
+  626--633. IEEE, 2019.
+
+\bibitem[Xu and Raginsky(2017)]{xu2017information}
+Aolin Xu and Maxim Raginsky.
+\newblock Information-theoretic analysis of generalization capability of
+  learning algorithms.
+\newblock \emph{Advances in neural information processing systems}, 30, 2017.
+
+\bibitem[Han et~al.(2024)Han, Chen, Ye, and Zhan]{han2024softs}
+Lu~Han, Xu-Yang Chen, Han-Jia Ye, and De-Chuan Zhan.
+\newblock Softs: Efficient multivariate time series forecasting with
+  series-core fusion.
+\newblock \emph{arXiv preprint arXiv:2404.14197}, 2024.
+
+\end{thebibliography}

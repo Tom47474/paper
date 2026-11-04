@@ -1,4 +1,4 @@
-\begin{thebibliography}{54}
+\begin{thebibliography}{57}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -56,8 +56,8 @@ Jie Xu, Cong Wang, and Xiaohua Jia.
 
 \bibitem[Gan and Lau(2024)]{gan2024trust}
 QingQiu Gan and Raymond Yiu~Keung Lau.
-\newblock Trust in a ‘trust-free’system: Blockchain acceptance in the
-  banking and finance sector.
+\newblock Trust in a `trust-free'system: Blockchain acceptance in the banking
+  and finance sector.
 \newblock \emph{Technological forecasting and social change}, 199:\penalty0
   123050, 2024.
 
@@ -330,6 +330,19 @@ Mingzhe Li, Wei Wang, and Jin Zhang.
 \newblock \emph{IEEE Transactions on Parallel and Distributed Systems},
   34\penalty0 (10):\penalty0 2797--2810, 2023.
 
+\bibitem[Wu et~al.(2026)Wu, Liu, Zhang, Sun, and Li]{wu2026fabrictca}
+Haibo Wu, Hui Liu, Lili Zhang, Yi~Sun, and Jianhui Li.
+\newblock Fabrictca: A two-level conflict avoidance approach to consortium
+  blockchains.
+\newblock \emph{Future Generation Computer Systems}, 174:\penalty0 108029,
+  2026.
+
+\bibitem[Ma et~al.(2026)Ma, Qu, Zhao, and Li]{ma2026mixchain}
+YuanYi Ma, Cheng Qu, He~Zhao, and Jing Li.
+\newblock Mixchain: An account-vessel hybrid model for high-performance
+  blockchain system.
+\newblock \emph{Future Generation Computer Systems}, page 108577, 2026.
+
 \bibitem[Li et~al.(2024)Li, Luo, Xue, Xue, Sun, and Li]{li2024secure}
 Meiqi Li, Xinyi Luo, Kaiping Xue, Yingjie Xue, Wentuo Sun, and Jian Li.
 \newblock A secure and efficient blockchain sharding scheme via hybrid
@@ -378,6 +391,13 @@ Jie Xu, Yulong Ming, Zihan Wu, Cong Wang, and Xiaohua Jia.
   sharding-based blockchains.
 \newblock \emph{IEEE Transactions on Parallel and Distributed Systems},
   35\penalty0 (4):\penalty0 548--559, 2024.
+
+\bibitem[Tang et~al.(2026)Tang, Sun, and Wolter]{tang2026enhancing}
+Ziyue Tang, Jianping Sun, and Katinka Wolter.
+\newblock Enhancing multi-agent train control systems with permissioned
+  blockchain: A framework for efficient and low-latency ma generation.
+\newblock \emph{Future Generation Computer Systems}, 183:\penalty0 108564,
+  2026.
 
 \bibitem[Leng et~al.(2019)Leng, Yan, Liu, Xu, Zhao, Shi, Wei, Zhang, and
   Chen]{leng2019manuchain}

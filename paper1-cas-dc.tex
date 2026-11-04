@@ -218,6 +218,8 @@ The remainder of this paper is organized as follows. Section~\ref{sec:related} r
 
 As blockchain technology becomes increasingly widespread across various applications, performance issues such as low throughput and high latency have emerged as major bottlenecks. Existing research has explored a range of optimization strategies from different perspectives to address these challenges.
 
+Recent studies have also explored transaction conflict management and ledger design. \citet{wu2026fabrictca} proposed FabricTCA, which improves Hyperledger Fabric throughput by mitigating intra-block and inter-block transaction conflicts. \citet{ma2026mixchain} introduced MixChain, an Account-Vessel hybrid ledger model that reduces transaction dependencies to facilitate parallel execution. These approaches improve blockchain performance through changes to transaction processing and ledger architecture, whereas ChainOptNet focuses on adaptive block-size adjustment.
+
 \subsection{Improvement of consensus algorithms}
 \vspace{6pt}
 Improving the consensus mechanism is one of the most common approaches to enhancing blockchain performance. \citet{gao2021sharding} proposed a piecewise hash graph consensus algorithm designed for industrial IoT, which significantly improves throughput and reduces latency. \citet{zhang2021trustworthy} enhanced the performance of Hyperledger Fabric by modifying its consensus module, thereby achieving a better trade-off between security and efficiency. \citet{xu2023adaptchain} introduced AdaptChain, an elastic blockchain that supports adaptive expansion and contraction based on transaction volume, optimizing resource utilization while maintaining high performance.
@@ -240,6 +242,8 @@ Several studies have employed classical optimization algorithms to fine-tune blo
 \vspace{6pt}
 Recent advances have introduced machine learning (ML) to predict system behavior and support intelligent decision-making in blockchain environments. \citet{wang2022bpr} proposed a performance prediction framework that employs Multilayer Perceptron (MLP) and Long Short-Term Memory (LSTM) networks to predict blockchain performance and transaction arrival rates. However, this approach does not address issues such as the cost of collecting blockchain performance data, its generalization capability under small sample sizes, and the integration of predictive modeling with system-level optimization. Other prediction-driven optimization methods combine temporal workload forecasting, performance prediction, and score-based configuration adjustment to improve throughput and latency \citep{wang2023learningchain}. Although these methods provide a more flexible alternative to manual tuning, they often depend on predefined scoring functions or fixed decision rules, making it difficult to adapt the optimization objective when latency and throughput priorities change across operating regimes.
 
+
+Reinforcement learning has also been applied to permissioned blockchain optimization. \citet{tang2026enhancing} proposed Rail-Fabric, a framework for low-latency movement authority generation in train control systems. The framework uses a Double Deep Q-Network (DDQN) to dynamically partition the railway network and adjust sub-blockchain boundaries. While Rail-Fabric focuses on topology-aware partitioning, ChainOptNet combines workload forecasting and performance prediction with block-size control and trend-aware reward weighting.
 
 %\subsection{Research Motivation}
 
