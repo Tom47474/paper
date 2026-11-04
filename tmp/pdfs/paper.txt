@@ -1,0 +1,1720 @@
+
+--- PAGE 1 ---
+ChainOptNet: An intelligent multi-level learning framework for
+adaptiveblockchain systemperformance optimization
+ARTICLE INFO
+ABSTRACT
+Keywords:
+Blockchain system
+Performance optimization
+Transaction arrival rate prediction
+Deep reinforcement learning
+Machine learning
+Block size adjustment
+Blockchainhasemergedasatransformativetechnologywithnumerousapplicationsduetoitstamper-
+proof, traceable, and decentralized architecture. Nonetheless, its performance remains constrained,
+particularly in areas such as latency and throughput, which pose significant barriers to large-scale
+deployment.ThispaperproposesChainOptNet,anovelblockchainsystemperformanceoptimization
+framework that addresses these challenges with three key technical contributions. First, we develop
+the Convolutional Feature Aggregation and Distribution (CFAD) model to forecast transaction
+arrival rates. This model uses a deep learning architecture to capture transaction data’s temporal
+dependencies and complex statistical patterns. Second, we present a multi-model collaborative
+frameworkforblockchainperformancepredictionthatimprovespredictiveaccuracyandrobustnessby
+intelligently integrating diverse machine learning models. Third, we create a Dynamic Weight Deep
+Q-Network (DW-DQN) optimization mechanism that combines a DQN-based block-size controller
+with a trend-aware dynamic reward weighting module for balanced multi-objective optimization.
+ExtensiveexperimentalevaluationsdemonstratethatChainOptNetsignificantlyimprovesbothlatency
+and throughput across a wide range of load conditions, consistently outperforming representative
+forecasting, regression, ensemble-learning, and score-based optimization baselines. Across the eval-
+uated workload settings, ChainOptNet reduces average transaction latency by up to 21.4% and
+improvesthroughputbyupto18.7%comparedwiththebest-performingbaselineamongtheevaluated
+categories. These results demonstrate the framework’s scalability, adaptability, and strong potential
+for practical deployment in diverse blockchain environments.
+1. Introduction
+Blockchain technology has quickly evolved into atrans-
+formative paradigm across multiple domains, providing de-
+centralized, tamper-resistant, and transparent solutions for
+data exchange and transaction processing [1],[2],[3],[4]. Its
+fundamental properties, which include immutability, trace-
+ability [5],[6], and consensus-driven trust [7], have enabled
+widespreadadoptioninfieldssuchasdigitalfinance[8],[9],
+supply chain management [10],[11], healthcare [12], the
+InternetofThings(IoT)[13],[14],[15],[16],andsmartgrids
+[17],[18],[19],[20].
+Despitethesebenefits,blockchainsystemsstillfacesig-
+nificant performance bottlenecks, particularly in terms of
+scalability [21],[22],[23]. Existing public blockchains, such
+as Bitcoin and Ethereum, have limited transaction process-
+ing capabilities, averaging around 7 and 30 transactions per
+second (TPS), respectively [24],[25]. These rates fall far
+short of the requirements for high-throughput applications,
+suchasfinancialexchangesandIoTnetworks[26],[27],[28].
+Inaddition,thelatencyrequiredfortransactionconfirmation
+canrangefromafewsecondstominutes,makingblockchain
+unsuitable for latency-sensitive services like real-time pay-
+ments or industrial automation [29],[30],[31]. These lim-
+itations are exacerbated by dynamic workloads, in which
+transaction arrival rates and network conditions (such as
+node participation and network latency) fluctuate unpre-
+dictablyasaresultofexternaluserbehaviororsystem-level
+events. In such cases, traditional blockchain configurations,
+which are statically defined at the time of deployment, lack
+the responsiveness required to adapt to real-time changes.
+ORCID(s):
+This causes to increased block propagation delays, transac-
+tion congestion, and inefficient resource utilization. More-
+over, practical blockchain deployments are often affected
+by fluctuating node participation, heterogeneous hardware
+capabilities, and geographically distributed network infras-
+tructures. These factors introduce varying communication
+delays and resource availability, further complicating per-
+formanceoptimization.Therefore,aneffectiveoptimization
+frameworkshouldcontinuouslyadapttoworkloadevolution
+while maintaining stable performance under changing net-
+work conditions.
+To address these performance issues, researchers have
+proposed a number of improvement strategies. Alternative
+consensus algorithms such as Proof-of-Stake (PoS) and
+Practical Byzantine Fault Tolerance (PBFT), aim to reduce
+consensuslatencyandincreasethroughput[32],[33],[34],[35],
+but they frequently compromise decentralization and scala-
+bility. Some approaches use heuristic or rule-based tuning
+of system parameters, such as adjusting block size or gas
+limits based on network statistics [36],[37],[38],[39],[40].
+Some researchers have also introduced machine learning-
+based methods for tuning blockchain parameters [41], with
+the goal of optimizing performance in a more adaptive and
+data-driven manner. Recently, some researchers have used
+performance scoring mechanisms to dynamically optimize
+blockchain configuration parameters [42]. These methods
+can effectively supplement and synergize with existing
+efforts,providingapromisingpathtoimprovingblockchain
+performance.
+However,thesestrategiestypicallylackadaptabilityand
+robustnessbecausetheyrelyonmanuallydefinedthresholds
+that may be insufficient under unpredictable or changing
+conditions. Furthermore, while machine learning methods
+First Author et al.: Preprint submitted to Elsevier Page 1 of16
+--- PAGE 2 ---
+Short Title of the Article
+provide more flexibility, the accuracy of the proposed per-
+formancepredictionmodelscanstillbeimproved,andtheir
+scalability is frequently limited by high training data re-
+quirements, which may result in additional data collection
+andcomputationalcosts.Furthermore,whileadvancessuch
+as improved consensus algorithms and blockchain shard-
+ing have demonstrated potential in controlled environments
+[32],[43],theirpracticalimplementationfrequentlyencoun-
+ters significant technical barriers and intricate customiza-
+tion requirements. These include the varying complexity of
+real-world application scenarios and the diverse needs of
+blockchainusers,whichlimitthesolutions’universalappli-
+cability. Notably, recent scoring-based optimization meth-
+ods[42]alsofacechallengessuchasstaticweightconfigura-
+tions,limitedreal-timeadaptability,manuallydefinedtuning
+rules, limited deployment scope, and inadequate handling
+of multi-objective trade-offs. These limitations reduce their
+effectiveness in dynamic and heterogeneous blockchain en-
+vironments. Overall, most existing methods are constrained
+by rigid architectures or fixed policies, which significantly
+reduces their effectiveness in rapidly changing operational
+environments.
+To address the aforementioned limitations, we intro-
+duce ChainOptNet, a unified and adaptive blockchain per-
+formance optimization framework that integrates key pro-
+cesses, such as transaction arrival rate prediction, perfor-
+mance forecasting, and dynamic parameter tuning. In con-
+trast to existing methods that handle these tasks in isola-
+tion, ChainOptNet uses a tightly coupled design that allows
+for real-time adaptation to dynamic network environments.
+Theframeworkachieveshighresponsivenessandrobustness
+by systematically coordinating learning-based components.
+Extensive evaluations across a variety of blockchain sce-
+narios show consistent improvements in throughput and
+latency over representative baselines from forecasting, re-
+gression, ensemble-learning, and score-based optimization
+categories, highlighting its strong adaptability and scalabil-
+ity in complex environments. The primary contributions of
+this paperare summarized as follows:
+forlatencyandthroughputaredeterministicallycom-
+puted from recent performance trends, enabling effi-
+cient multi-objective trade-offs in dynamic network
+environments.
+• We run extensive experiments across a wide range of
+blockchainscenariostovalidateChainOptNet’ssupe-
+rior performance, adaptability, and scalability under
+varying workloads and network conditions. The find-
+ings show that ChainOptNet can learn effective pa-
+rameter adjustment strategies by leveraging temporal
+patterns,ensemblelearning,anddynamicrewardtun-
+ing, demonstrating ChainOptNet’s effectiveness and
+superiority for blockchain system performance opti-
+mization.
+The remainder of this paper is organized as follows.
+Section 2 reviews related work on blockchain performance
+prediction and optimization. Section 3 presents the moti-
+vation for this study. Section 4 presents the architecture
+and operational design of ChainOptNet. Section 5 details
+the experimental setup and presents comparative analyses.
+Section 6 concludes the paper and discusses future research
+directions.
+2. Relatedwork
+Asblockchaintechnologybecomesincreasinglywidespread
+across various applications, performance issues such as
+low throughput and high latency have emerged as major
+bottlenecks. Existing research has explored a range of op-
+timization strategies from different perspectives to address
+these challenges.
+2.1. Improvementofconsensus algorithms
+• WeintroduceCFAD,aconvolutionalsequencemodel
+designed to capture complex nonlinear temporal de-
+pendencies found in blockchain transaction patterns.
+CFAD allows for accurate short-term and mid-term
+forecasting of transaction arrival rates, which serves
+as acrucial inputfordownstream optimization.
+• Weproposeacollaborativemulti-modelperformance
+prediction framework that includes heterogeneous
+learningmodels.Theframeworkimprovesforecasting
+robustness across different performance indicators by
+usinginverseerror-weightedensemblelearning,even
+when thehistorical datais noisy orincomplete.
+• WepresentDW-DQN,areinforcementlearning-based
+optimization module with a trend-aware dynamic
+reward weighting mechanism. The DQN learns the
+block-sizeadjustmentpolicy,whiletherewardweights
+Improving the consensus mechanism is one of the most
+common approaches to enhancing blockchain performance.
+Gao et al. [33] proposed a piecewise hash graph consensus
+algorithm designed for industrial IoT, which significantly
+improves throughput and reduces latency. Zhang et al. [34]
+enhanced the performance of Hyperledger Fabric by modi-
+fyingitsconsensusmodule,therebyachievingabettertrade-
+offbetweensecurityandefficiency.Xuetal.[32]introduced
+AdaptChain, an elastic blockchain that supports adaptive
+expansion and contraction based on transaction volume,
+optimizing resource utilization while maintaining high per-
+formance.Lietal.[44]proposedahybridconsensusmecha-
+nism that integrates intra-shard processing with lightweight
+global coordination, addressing the issues of vulnerable
+consensus security and delayed atomicity in cross-shard
+transactionswhilemaintainingadaptiveshardmanagement.
+Islametal.[45]proposedProofofRandomLeader(PoRL),a
+PoA-basedconsensusalgorithmthatemploysverifiableran-
+dom functions to enhance throughput and ensure fair leader
+selection, thus addressing the limitations of low throughput
+andpredictableleaderrotationinexistingPoAvariantssuch
+as Aura and Clique.
+First Author et al.: Preprint submitted to Elsevier Page 2 of 16
+--- PAGE 3 ---
+2.2. Blockchainsharding
+Sharding techniques partition the blockchain network
+into multiple shards to enhance parallelism and scalability.
+Cai et al. [46] developed Benzene, a collaboration-based
+shardingsystemthatimprovesthroughputwhilemaintaining
+shard-level security. Li et al. [43] presented LBChain, a
+load-balancing sharding scheme that dynamically migrates
+accounts among shards based on activity levels, effectively
+balancing transaction loads and boosting throughput. Yang
+et al. [47] introduced EZchain, a passive sharding protocol
+that achieves constant communication and storage costs
+withoutrequiringcross-shardtransactionsorbeaconchains,
+offeringimprovedscalabilityandsecurityinlargenetworks.
+Liu et al. [48] proposed a flexible sharding (FS) blockchain
+protocol that features cross-shard Byzantine fault tolerance
+(CSBFT) to reduce confirmation delays, multiple parallel
+CSBFT to enhance system parallelism, and decentralized
+shard reconfiguration. This effectively addresses key chal-
+lenges in cross-shard transaction processing and security
+vulnerabilities. Jia et al. [49] proposed a low cross-shard
+protocol, which features a multi-level state model and a
+community overlap propagation algorithm to dramatically
+reduce cross-shard transactions. The X-shard system [50]
+addresses cross-shard processing bottlenecks through trans-
+action pattern-based allocation and optimistic parallel pro-
+cessing, achieving near-linear throughput scaling and re-
+duced latency.
+2.3. Optimization basedontraditionalalgorithms
+Several studies have employed classical optimization
+algorithms to fine-tune blockchain parameters. Jamil et al.
+[38]appliedParticleSwarmOptimization(PSO)toevaluate
+thetrade-offbetweenthroughputandlatencyinHyperledger
+Fabric, aiming to determine the optimal transaction arrival
+rate. Chen et al. [39] deployed a private Ethereum IoT
+network and used probabilistic fitting to model its latency
+performance.Wilhelmietal.[40]utilizedMarkovChainsto
+determinetheoptimalblocksizeconfigurationforminimiz-
+ing latency throughnumerical analysis.
+2.4. Machinelearning-basedoptimization
+Recentadvanceshaveintroducedmachinelearning(ML)
+to predict system behavior and support intelligent decision-
+making in blockchain environments. Wang et al. [41] pro-
+posed a performance prediction framework that employs
+MultilayerPerceptron(MLP)andLongShort-TermMemory
+(LSTM) networks to predict blockchain performance and
+transaction arrival rates. However, this approach does not
+address issues such as the cost of collecting blockchain
+performance data, its generalization capability under small
+sample sizes, and the integration of predictive modeling
+withsystem-leveloptimization.Otherprediction-drivenop-
+timizationmethodscombinetemporalworkloadforecasting,
+performance prediction, and score-based configuration ad-
+justment to improve throughput and latency [42]. Although
+thesemethodsprovideamoreflexiblealternativetomanual
+Short Title of the Article
+tuning, they often depend on predefined scoring functions
+or fixed decision rules, making it difficult to adapt the op-
+timization objective when latency and throughput priorities
+changeacross operating regimes.
+First Author et al.: Preprint submitted to Elsevier 3. Research motivation
+Thissectionidentifieskeylimitationsincurrentblockchain
+optimization: the disjoint handling of workload prediction
+and system tuning, the poor generalization of machine
+learning models under data scarcity and noise, and the lack
+of adaptability and real-time responsiveness in dynamic
+environments.
+3.1. Disjoint optimizationand lack ofadaptability
+indynamic environments
+Current blockchain optimization strategies often treat
+transaction workload prediction and system-level configu-
+ration separately, and many of them use static configura-
+tions or rule-based policies, assuming stable environments
+[38],[39],[40],[41],[42],[51]. In dynamic blockchain envi-
+ronments, transaction arrival rates fluctuate unpredictably
+due to user behavior or external events, and node partic-
+ipation and transaction volumes are also volatile. Without
+tightintegrationbetweenpredictionandcontrol,andwithout
+adaptivestrategiesthatcanautonomouslyupdateconfigura-
+tionsinresponsetoobservedchanges,workloadpredictions
+cannot effectively guide proactive adjustments to system
+parameterslikeblocksizeorgaslimit,leadingtoinefficient
+resourceallocation,increasedlatency,andpoorperformance
+under shiftingworkloads.
+3.2. Limitedgeneralization under data constraints
+Machine learning–based blockchain performance pre-
+diction often relies on abundant, high-quality training data,
+which is rarely available in real-world deployments. Public
+blockchains may have imbalanced datasets, while consor-
+tium blockchains often suffer from small sample sizes [52].
+Additionally, blockchain data is frequently noisy due to
+inconsistent node behaviors or heterogeneous network con-
+ditions,challenginglearningalgorithmsandlimitingmodel
+generalization [53]. A robust framework must incorporate
+modelsresilienttosuchdata deficiencies.
+3.3. Summary
+Toaddressthesegaps,thispaperproposesChainOptNet,
+a unified blockchain performance optimization framework
+featuring: (i) a deep learning–based transaction arrival rate
+prediction model (CFAD), (ii) a multi-model ensemble for
+performance prediction, and (iii) a dynamic weight rein-
+forcement learning strategy (DW-DQN) for real-time block
+sizeadjustment.
+Page 3 of 16
+--- PAGE 4 ---
+Short Title of the Article
+Figure 1: The framework of ChainOptNet.
+4. System model
+4.1. Overallframework
+Figure 1 depicts the proposed ChainOptNet framework
+for blockchain performance optimization, which dynam-
+ically adjusts the block size according to real-time net-
+work conditions and historical transaction information. The
+framework takes historical transaction arrival rates together
+with blockchain configuration parameters, including block
+size,thenumberoforderingnodes,latency,andthroughput,
+as inputs, and outputs the optimal block size to improve
+overall blockchain performance. As illustrated in Fig. 1,
+the proposed framework consists of the following three
+components:
+(1) Transaction arrival rate prediction: The Convolu-
+tionalFeatureAggregationandDistribution(CFAD)model
+predictsfuturetransactionarrivalratesfromhistoricaltrans-
+action data by effectively capturing temporal dependencies
+and local fluctuation patterns.
+(2) Blockchain performance prediction: A multi-model
+collaborative prediction framework integrates seven ma-
+chinelearningmodels,includingLinearRegression,Bayesian
+RidgeRegression,DecisionTreeRegressor,SupportVector
+Regression, Gradient Boosting Regressor, Random Forest
+Regressor, and eXtreme Gradient Boosting Regressor, to
+estimate blockchain performance metrics such as latency
+and throughput. The prediction results are further fused
+using an inverse error-weighted ensemble strategy, thereby
+improvingprediction robustnessandaccuracy.
+(3) Blockchain performance optimization: A Dynamic
+Weight Deep Q-Network (DW-DQN) dynamically deter-
+mines the optimal block size. Specifically, the optimiza-
+tion module consists of a DQN-based block-size controller
+and a trend-aware reward weighting module. The DQN
+learns the optimal block-size adjustment policy, while the
+reward weighting module adaptively computes the relative
+importance of latency and throughput according to recent
+performance trends, enabling adaptive multi-objective opti-
+mization.
+4.2. Prediction oftransaction arrivalrate
+Inspired by the recently proposed SOFTS model [54],
+which demonstrates efficient and scalable performance in
+multivariatetimeseriesforecastingviaitscentralizedSTAR
+(STarAggregate-Redistribute)module,wecreateamodified
+version specifically for predicting blockchain transaction
+arrivalrates.UnlikeSOFTS,whichfocusesongeneralmulti-
+variateforecastingacrossavarietyofdomains,ourapproach
+adapts and simplifies the centralized interaction mechanism
+byincorporatingconvolutionaloperationsforbothtemporal
+and channel-wise modeling, making it better suited to the
+characteristics of blockchain transaction data. This leads to
+the creation of the Convolutional Feature Aggregation and
+Distribution (CFAD) framework, which preserves SOFTS’
+lowcomplexityadvantagewhileimprovingitssuitabilityfor
+blockchain-specific scenarios.
+To address the challenges of blockchain performance
+optimization, particularly in accurately predicting transac-
+tionarrivalrates,weproposetheConvolutionalFeatureAg-
+gregationandDistribution(CFAD)framework.Thisframe-
+work is intended to forecast multivariate transaction arrival
+First Author et al.: Preprint submitted to Elsevier Page 4 of 16
+--- PAGE 5 ---
+Short Title of the Article
+Figure 2: The framework of CFAD.
+rates efficiently, with less computational complexity than
+traditional methods. This method allows the model to cap-
+ture both spatial and temporal dependencies in blockchain
+transaction data, which improves prediction accuracy and
+system performance. As shown in Figure 2, the CFAD
+framework consists of three main components: sequence
+embedding,theConvolutionalFeatureAggregationandDis-
+tribution Module (CFADM), and convolutional output pro-
+jection.
+4.2.1. Sequence embedding
+ThesequenceembeddingcomponentofCFADtreatsthe
+entire transaction time series as a single "patch" processed
+through a 1D convolutional layer. This approach avoids the
+dimensionality expansion typically caused by patch embed-
+ding methods and preserves the temporal relationships in
+the data. By using a convolutional layer with a kernel size
+of 1 and ’same’ padding, CFAD efficiently preserves the
+temporalrelationshipswithout dimensionalityexpansion:
+𝑆0 =Conv1Dkernel=1(𝑋), 𝑋 ∈ℝ𝐿×𝐶 (1)
+where 𝑋 represents the input transaction data with 𝐿time
+stepsand 𝐶features (channels).
+4.2.2. Convolutional feature aggregation and
+distribution module (CFADM)
+TheConvolutionalFeatureAggregationandDistribution
+Module (CFADM) is CFAD’s core component, which ag-
+gregatesanddistributesfeaturesfromblockchaintransaction
+data. Formally,
+𝑆𝑁 =CFADM(𝑆0) (2)
+where𝑆𝑁 denotestheoutputofthe𝑁-thCFADMlayer.The
+module has two phases:
+AggregationPhase:Duringthisphase,dual-layer3×3
+convolutions with ’same’ padding and ReLU activation are
+usedtoaggregatetemporalfeaturesfromtheinputsequence.
+Theaggregationprocessenablesthemodeltolearnimplicit
+temporaldependenciesthroughoutthesequence,resultingin
+a richglobal featurerepresentationof the transactiondata:
+𝑆𝑎𝑔𝑔
+𝑖
+=Conv1Daggregate,kernel=3(𝑆𝑖−1) (3)
+𝑆𝑎𝑔𝑔
+𝑖
+=ReLU(𝑆𝑎𝑔𝑔
+𝑖 ), 𝑖=1,2,…,𝑁 (4)
+where 𝑆𝑎𝑔𝑔
+𝑖 represents the aggregated feature at the 𝑖-th
+layer.
+Distribution Phase: To enhance the preservation of
+layer-wiseinputinformation,weconcatenatetheaggregated
+featureswiththepre-aggregationinput𝑆𝑖−1 beforedistribu-
+tion, forming a richer feature representation for subsequent
+gating and distribution. Specifically, features are first con-
+catenated alongthechannel dimension:
+𝑆𝑐𝑜𝑛𝑐𝑎𝑡
+𝑖
+=Concat(𝑆𝑎𝑔𝑔
+𝑖 ,𝑆𝑖−1) (5)
+where Concat(⋅) denotes concatenation along the chan-
+nel dimension, allowing the model to integrate both pre-
+aggregation input features and aggregated features.
+The concatenated features are then redistributed across
+channels using two 1×1convolutional branches combined
+with a gating mechanism. The gating is implemented via
+a sigmoid activation to control the flow of information,
+allowingthemodeltodynamicallyadjusttheimportanceof
+eachfeature:
+𝐺𝑖 =𝜎(Conv1Dgate(𝑆𝑐𝑜𝑛𝑐𝑎𝑡
+𝑖 )) (6)
+𝐷𝑖 =Conv1Ddistribute,kernel=1(𝑆𝑐𝑜𝑛𝑐𝑎𝑡
+𝑖 ) (7)
+𝑆𝑜𝑢𝑡
+𝑖
+=𝐺𝑖 ⊙𝐷𝑖 (8)
+First Author et al.: Preprint submitted to Elsevier Page 5 of 16
+--- PAGE 6 ---
+Short Title of the Article
+where 𝜎(⋅)denotes the sigmoid activation function for gat-
+ing, and ⊙ denotes element-wise multiplication. This step
+ensuresthatthemostrelevantfeatures,enrichedbyboththe
+current layer input and the aggregated global context, are
+distributedtosubsequent layers for accurate prediction.
+where 𝜇 and 𝜎 denote the mean and standard deviation of
+eachfeature, respectively.
+Toenrichthefeaturerepresentation,second-orderinter-
+actions are explicitly computed as follows:
+𝑋interaction =[𝑋⊗𝑋], (11)
+4.2.3. Convolutional output projection
+Let 𝑆𝑁 represent the output of the 𝑁-th CFADM layer,
+whichencodesaggregatedanddistributedtemporalfeatures.
+After the CFADM layers, the final feature representation
+is passed through a 1 × 1 convolutional layer to project
+the aggregated and distributed features into the predicted
+transaction arrival rates. Compared to a traditional fully
+connectedlayer,thisconvolutionaloutputlayerpreservesthe
+sequence’s temporal structure and allows for localized pre-
+diction, which is especially useful for multi-step predicting:
+where ⊗ denotes the outer product of the feature vector.
+The resulting interaction terms are concatenated with the
+normalizedinput to form an extendedfeature vector:
+𝑋extended =[𝑋scaled,𝑋interaction]. (12)
+Each base model 𝑓𝑚(⋅), parameterized by 𝜃𝑚, produces
+an individual prediction̂
+𝑌𝑚 as follows:
+̂
+𝑌𝑚
+=𝑓𝑚(𝑋extended;𝜃𝑚). (13)
+To evaluate model performance, the Mean Absolute
+Error (MAE) is adopted. Let the total number of samples
+be 𝑁, and assume each sample’s true label is 𝑌𝑖 ∈ ℝ𝑘, the
+MAEofmodel 𝑚over the dataset is computedas follows:
+MAE𝑚
+=
+1
+𝑁
+𝑁
+∑
+‖ ‖ ‖̂
+𝑌𝑖,𝑚−𝑌𝑖
+‖ ‖ ‖1, (14)
+𝑖=1
+where ‖⋅‖1 denotes the element-wise 𝐿1-norm across the
+performance metrics.
+BasedontheseMAEscores,aninverse-error-basedsoft-
+max function determinesthe ensemble weights:
+𝑊𝑚
+=
+exp(−MAE𝑚∕𝑇)
+∑𝑀
+𝑗=1exp(−MAE𝑗∕𝑇), (15)
+where 𝑇 is a temperature hyperparameter controlling the
+sharpness of the distribution.
+In the online prediction phase, model performance is
+continuouslyreassessedusingaslidingwindowofthemost
+recent 𝑁 samples. At time step 𝑡, let the windowed data be
+{(𝑋𝑡−𝑖,𝑌𝑡−𝑖)}𝑁−1
+𝑖=0 .Theupdatedpredictionerrorformodel𝑚
+is calculated as follows:
+MAE(𝑡)
+𝑚
+=
+1
+𝑁
+𝑁−1
+∑
+𝑖=0
+‖ ‖𝑓𝑚(𝑋𝑡−𝑖;𝜃𝑚)−𝑌𝑡−𝑖‖ ‖1. (16)
+Thecorrespondingdynamic weight is:
+𝑊(𝑡)
+𝑚
+=
+exp(−MAE(𝑡)
+𝑚 ∕𝑇)
+∑𝑀
+𝑗=1exp(−MAE(𝑡)
+𝑗 ∕𝑇). (17)
+andthe ensemble prediction becomes:
+̂
+𝑌(𝑡) =
+𝑀
+∑
+𝑚=1
+𝑊(𝑡)
+𝑚⋅
+̂
+𝑌(𝑡)
+𝑚. (18)
+Whilê
+𝑌(𝑡) serves as the final output of the ensemble
+during the inference phase, the training process aims to
+optimizethebasemodelparameters{𝜃𝑚}𝑀
+𝑚=1byminimizing
+𝑌 =Conv1Dout,kernel=1(𝑆𝑁) (9)
+where 𝑌 ∈ ℝ𝐿′×1 represents the predicted transaction
+arrival ratesforfuture𝐿′ timesteps.
+4.3. Blockchainperformancepredictionmodel
+To address the limitations of single machine learning
+models in capturing complex interactions among features,
+this study proposes a multi-model collaborative prediction
+framework that combines seven different machine learn-
+ing algorithms. This framework enhances predictive accu-
+racyandadaptabilityinvolatileblockchainenvironmentsby
+leveraging model diversityanddynamic weighting.
+The proposed framework integrates the following base
+regressors: Linear Regression (LR), Bayesian Ridge Re-
+gression (BYR), Decision Tree Regressor (DTR), Bagging
+Regressor (BR), Gradient Boosting Regressor (GBR), Ran-
+domForestRegressor(RFR),andeXtremeGradientBoost-
+ing (XGB). These models cover both parametric and non-
+parametric domains, allowing the ensemble to capture a
+wide range of data characteristics, including linear depen-
+denciesand complex nonlinearpatterns.
+Figure3depictsthecompleteworkflowfortheproposed
+multi-modelframework.Itisdividedintotwomajorstages:
+(i) an offline training phase, in which base learners are
+trained on enriched features and weighted using inverse-
+error-based softmax; and (ii) an online prediction phase, in
+which model weights are dynamically updated using a slid-
+ing window of recent observations to maintain adaptability
+under changing conditions.
+Lettheinputfeaturevectorbedenotedas𝑋 =[𝑥1,𝑥2,
+⋯,𝑥𝑛]∈
+ℝ𝑑, comprising normalized system parameters such as
+transaction arrival rate, block size, and number of ordering
+nodes. The corresponding target vector 𝑌 ∈ ℝ𝑘 represents
+performance indicatorsincludinglatencyand throughput.
+Prior to model training, the input features are standard-
+ized using z-score normalization:
+𝑋−𝜇
+𝑋scaled =
+𝜎
+, (10)
+First Author et al.: Preprint submitted to Elsevier Page 6 of 16
+--- PAGE 7 ---
+Short Title of the Article
+Figure 3: The framework of multi-model performance predic-
+tion.
+a composite loss function that reflects the accuracy of both
+latency and throughputpredictions.
+To ensure balanced learning across both objectives, the
+training process minimizes the following composite loss
+function:
+𝐿=𝛼𝐿latency +(1−𝛼)𝐿throughput, (19)
+where𝛼∈[0,1]isahyperparametercontrollingtherelative
+importance of latency and throughput prediction. Cross-
+validationusinggridsearchdeterminestheoptimal𝛼value.
+4.4. Blockchainperformanceoptimizationwith
+DW-DQN
+The proposed Dynamic Weight Deep Q-Network (DW-
+DQN) framework is intended to address the limitations
+of traditional reinforcement learning approaches in multi-
+objective optimization tasks within blockchain environ-
+ments, particularly in the dynamic adjustment of block size
+tooptimizethroughputandlatency.UnliketraditionalDeep
+Q-Networks(DQNs),whichuseastaticrewardformulation,
+DW-DQN combines a DQN-based block-size controller
+with a trend-aware dynamic reward weighting module. The
+DQN learns the action policy, while the weighting module
+deterministicallyupdatesthelatencyandthroughputweights
+according to recent system performance trends.
+Figure 4 depicts the architecture and interconnections
+of the system’s components, providing a comprehensive
+overviewoftheproposedDW-DQNframework.Theframe-
+work is made up of two coordinated components: (1) a
+DQN agent that learns an optimal block-size adjustment
+policy from environmental interactions, and (2) a trend-
+aware reward weighting module that computes the weight
+vectorusedinrewardcomputation.Thestateinformationis
+used by the DQN for action selection and by the weighting
+module forreward prioritization.
+Formally, the learning process is modeled as a Markov
+Decision Process (MDP) (,,,,𝛾), where  denotes
+the state space,  represents the action space,  denotes
+First Author et al.: Preprint submitted to Elsevier Figure 4: The framework of DW-DQN.
+the state transition probabilities,  represents the reward
+function, and 𝛾 ∈[0,1)denotes the discount factor. At time
+step 𝑡,the system state is represented as follows:
+𝑠𝑡 =[𝜆𝑡,𝑏𝑡,𝑛𝑡,𝑙𝑡,𝜏𝑡] (20)
+where 𝜆𝑡 denotes the transaction arrival rate, 𝑏𝑡 represents
+the current block size, 𝑛𝑡 denotes the number of ordering
+nodes, 𝑙𝑡 represents the average latency, and 𝜏𝑡 denotes the
+average throughput. The action 𝑎𝑡 corresponds to a discrete
+change in block size 𝑎𝑡 ∈ {−Δ𝑏,0,+Δ𝑏}, where Δ𝑏is the
+step size.
+Instead of a fixed scalar reward, the DW-DQN frame-
+work utilizes a dynamically weighted reward function de-
+fined as follows:
+𝑟𝑡 =𝜔𝑙,𝑡𝑟(𝑙)
+𝑡 +𝜔𝜏,𝑡𝑟(𝜏)
+𝑡 (21)
+𝑟(𝑙)
+𝑡
+=−|𝑙𝑡−𝑙∗| (22)
+𝑟(𝜏)
+𝑡
+=𝜏𝑡∕𝜏∗ (23)
+where 𝑟(𝑙)
+𝑡 penalizes latency deviation from a target latency
+𝑙∗, and 𝑟(𝜏)
+𝑡 reflects normalized throughput performance
+againstatarget𝜏∗.Theweights𝜔𝑙,𝑡and𝜔𝜏,𝑡aredynamically
+computed at each time step by the trend-aware weighting
+module, subject to the constraint 𝜔𝑙,𝑡 + 𝜔𝜏,𝑡 = 1. These
+weights are not predicted by an additional neural network.
+Instead,theyarederivedfromrecentlatencyandthroughput
+trends so that the reward function can emphasize the objec-
+tive thatis currently changingmoresharply.
+The DQN agent approximates the action-value function
+𝑄𝜃(𝑠𝑡,𝑎𝑡), using a neural network with parameters 𝜃. The
+networkistrainedtominimizethetemporal-differenceloss:
+𝐿(𝜃)=𝔼 [(𝑟+𝛾max
+𝑎′ 𝑄𝜃−(𝑠′,𝑎′)−𝑄𝜃(𝑠,𝑎))2](24)
+where 𝜃− are the parameters of the target network 𝑄𝜃−,
+which are periodically updated from 𝜃, and  denotes the
+replay buffer that stores transitions (𝑠𝑡,𝑎𝑡,𝑟𝑡,𝑠𝑡+1).
+Page 7 of 16
+--- PAGE 8 ---
+The trend-aware weighting module maintains recent la-
+tencyandthroughputobservationsandcomputestheirtrends
+viafirst-orderdifferences.Anormalizedratioisthenusedto
+determinetherelativeimportanceoflatencyandthroughput.
+|trend𝑙|
+latency_importance=
+|trend𝑙| +|trend𝜏| +𝜀
+throughput_importance =1−latency_importance (26)
+where trend𝑙 and trend𝜏 denote the mean first-order differ-
+encesofrecentlatencyandthroughput,respectively,and𝜀is
+asmallconstanttoavoiddivisionbyzero.Theseimportance
+scores are passed through a softmax layer to ensure proba-
+bilisticnormalization.Theresultingweights𝜔𝑙,𝑡 and 𝜔𝜏,𝑡are
+thenclippedtoliewithinaspecifiedrange[𝜔min,𝜔max],and
+re-normalized to enforce𝜔𝑙,𝑡 +𝜔𝜏,𝑡 =1.
+The objective of the DQN agent is to maximize the
+expectedcumulative dynamically weighted reward:
+𝑅𝑡 =
+∞
+∑
+𝑘=0
+𝛾𝑘𝑟𝑡+𝑘 (27)
+where𝑅𝑡 denotesthecumulativediscountedrewardstarting
+at time step 𝑡, based on the dynamically weighted reward
+formulation. Only the Q-network parameters are learned
+throughtemporal-differenceupdates;therewardweightsare
+computed by the deterministic trend-aware module and are
+notupdated by aseparate learned policy.
+This design allows the action policy to be learned by
+DQN while the reward priorities are adapted online accord-
+ingtoobservednetworkbehavior.TheDW-DQNframework
+demonstratesrobustadaptabilitybydynamicallymodulating
+reward priorities through a deterministic trend-aware rule,
+significantly improving blockchain system performance un-
+der a variety of operational scenarios.
+5. Experimental evaluation and analysis
+This section contains a series of experiments designed
+to assess the performance and effectiveness of the proposed
+methods.Qualitativecomparisonswithrelatedworkarealso
+providedto highlightthe novelty andbenefits.
+5.1. Experimental settings
+5.1.1. Experimental design
+We conducted three sets of experimentss: (1) predicting
+transaction arrival rates, (2) predicting blockchain perfor-
+mance through inverse error ensemble learning, and (3)
+optimizing blockchain performance.
+5.1.2. Datasets
+In Experiment 1 used an open-source dataset of park-
+ing lot records collected in real-world scenarios to predict
+transaction arrival rates. Although originally designed for
+Short Title of the Article
+(25)
+parking behavior analysis, the dataset’s realistic temporal
+characteristics make it suitable for modeling blockchain
+transactionarrivals.
+For Experiments 2 and 3, we used the HFBDP dataset,
+anopen-sourceblockchainperformancedatasetcompiledby
+[42] using Hyperledger Fabric. The dataset has five key pa-
+rameters: orderer node count (3, 5, 7, 9), transaction arrival
+rate (10, 15, 20, ..., 200), block size (10, 15, 20, ..., 800),
+latency, and throughput. These parameters were applied
+to the blockchain performance prediction and optimization
+tasks, respectively.
+5.1.3. Comparable methods
+To comprehensively evaluate the effectiveness of the
+proposed ChainOptNet framework, representative baseline
+methods wereselected for each task.
+For transaction arrival rate prediction, we compared the
+proposed CFAD model with several representative time-
+series forecasting models, including Autoformer, Informer,
+Transformer,LSTM,GRU,LightTS,MLP,andablockchain-
+oriented temporal prediction baseline [42]. These meth-
+ods cover recurrent neural networks, Transformer-based
+architectures, lightweight forecasting models, and domain-
+specific predictionmethods.
+For blockchain performance prediction, the proposed
+multi-model collaborative prediction framework was com-
+pared with several widely used regression models, includ-
+ing Linear Regression (LR), Bayesian Ridge Regression
+(BR), Bayesian Regularization (BYR), Decision Tree Re-
+gression(DTR),GradientBoostingRegression(GBR),Ran-
+domForestRegression(RFR),andeXtremeGradientBoost-
+ing (XGB). These models represent linear regression, prob-
+abilistic regression, decision tree learning, and ensemble
+learning methods that are widely adopted for blockchain
+performance prediction.
+Forblockchainperformanceoptimization,wecompared
+the proposed DW-DQN with representative non-RL op-
+timization settings, including fixed block-size configura-
+tions and a prediction-driven score-based adjustment strat-
+egy [42]. Such methods adjust parameters according to
+predefined performance scores or static configuration rules,
+whereas DW-DQN formulates block-size optimization as
+a reinforcement learning problem and dynamically adjusts
+reward weights according to network conditions, enabling
+more adaptive optimization under varying workloads.
+Toensurefairnessandreproducibility,allbaselinemeth-
+ods were evaluated using identical datasets, preprocessing
+procedures,experimentalsettings, and evaluation metrics.
+5.1.4. Evaluation metrics
+To quantitatively evaluate the prediction and optimiza-
+tion performance of the proposed framework, three widely
+used regression metrics were adopted, namely Mean Abso-
+lute Error (MAE), Root Mean Square Error (RMSE), and
+Mean Absolute Percentage Error (MAPE). During model
+training, the Mean Squared Error (MSE) was employed as
+First Author et al.: Preprint submitted to Elsevier Page 8 of 16
+--- PAGE 9 ---
+G r o u n d T r u t h W a n g e t a l . T r a n s f o r m e r I n f o r m e r L i g h t T S A u t o f o r m e r G R U L S T M M L P O u r s
+Short Title of the Article
+theoptimizationobjective.Thesemetricsprovideacompre-
+hensive evaluation of prediction accuracy, robustness, and
+generalization capability.
+Mean Squared Error (MSE): During model training,
+theMeanSquaredError(MSE)wasusedasthelossfunction
+tooptimizemodelparameters. Itisdefinedas
+8 0 0 0 0
+7 0 0 0 0
+MSE= 1
+𝑁
+𝑁
+∑
+(𝑦𝑖− ̂𝑦𝑖)2
+, (28)
+𝑖=1
+T r a n s a c t i o n A r r i v a l R a t e ( T P S )
+6 0 0 0 0
+5 0 0 0 0
+4 0 0 0 0
+3 0 0 0 0
+2 0 0 0 0
+1 0 0 0 0
+where 𝑁 denotes the number of samples, 𝑦𝑖 is the
+ground-truth value, and ̂𝑦𝑖 represents the corresponding
+0 2 0 0 4 0 0 6 0 0 8 0 0 1 0 0 0 1 2 0 0 1 4 0 0 1 6 0 0 1 8 0 0 0
+prediction.
+T i m e P i e c e s ( 5 m i n u t e s i n t e r v a l )
+Mean Absolute Error (MAE): MAE measures the av-
+erage magnitude of prediction errors regardless of their
+Figure 5: Prediction results of different models
+directionandis formulated as
+MAE= 1
+𝑁
+𝑁
+∑
+𝑖=1
+AsmallerMAEindicateshigherpredictionaccuracyand
+better overallperformance.
+Root Mean Square Error (RMSE): RMSE measures
+thestandarddeviationofpredictionerrorsandplacesgreater
+emphasis on largererrors. Itis calculated as
+RMSE=
+√ √ √ √1
+𝑁
+𝑁
+∑
+(𝑦𝑖− ̂𝑦𝑖)2
+. (30)
+𝑖=1
+Lower RMSE values indicate better predictive perfor-
+mance and stronger robustnessto largedeviations.
+Mean Absolute Percentage Error (MAPE): MAPE
+evaluates prediction accuracy in terms of relative error and
+isdefined as
+|𝑦𝑖− ̂𝑦𝑖|. (29)
+MAPE= 100%
+𝑁
+𝑁
+∑
+𝑖=1
+| | | |
+𝑦𝑖− ̂𝑦𝑖
+𝑦𝑖
+| | | |. (31)
+MAPE is scale-independent and is particularly suitable
+for comparing prediction performance across different ex-
+perimental settings.
+5.2. The performanceofChainOptNet
+5.2.1. Prediction performance on transaction arrival
+rate
+To evaluate the generalization capability and robust-
+ness of the proposed Convolutional Feature Aggregation
+and Distribution (CFAD) model in predicting transaction
+arrival rates, experiments were conducted at three temporal
+granularities: 1-minute,2-minute,and 5-minuteintervals.
+As shown in Figure 5 and Table 1, CFAD consistently
+outperforms several existing methods across all time scales
+tested. This superior performance is attributed to CFAD’s
+global one-dimensional convolution-based sequence en-
+coder, which preserves the inherent sequential structure of
+transaction data, allowing for better capture of fine-grained
+temporal dependencies and improved responsiveness to
+sudden fluctuations.
+In the 5-minute prediction scenario, CFAD achieved
+significantimprovementsinMAE,RMSE,andMAPEcom-
+paredwithrepresentativetemporalforecastingandblockchain-
+oriented prediction baselines. CFAD also demonstrated
+strong robustness during high-variance periods, reducing
+errorvarianceby4.92%comparedwiththepriorblockchain-
+orientedpredictionbaseline.Thisrobustnessisattributedto
+its multi-scale convolutional structure and integrated gating
+mechanism, which enhance predictive stability under non-
+stationary conditions.
+5.2.2. Performance of the blockchain performance
+prediction model
+To evaluate the generalization capability and predic-
+tive performance of the proposed multi-model collabo-
+rative blockchain performance prediction framework, we
+conducted extensive experiments focusing on latency and
+throughput.
+As shown in Figure 6 and Table 2, the proposed frame-
+work outperformed several categories of baseline methods,
+includingtraditionalregressionmodels(e.g.,LinearRegres-
+sion,BayesianRidge,DecisionTreeRegression),ensemble-
+basedlearners(e.g.,GradientBoostingRegression,Random
+ForestRegression,XGBoost),andpriorblockchain-oriented
+predictionmethods[42].Evaluationswereconductedunder
+various system configurations with block sizes of 50, 100,
+150, and 200, andacrossa wide rangeof transactionarrival
+rates (TPS).
+Latency prediction Theproposedmodelachievedthelow-
+estMAE(0.0223)andMAPE(0.0298)amongthecompared
+regression,ensemble-learning,andblockchain-orientedpre-
+diction baselines, as shown in Table 2. This demonstrates
+First Author et al.: Preprint submitted to Elsevier Page 9 of 16
+--- PAGE 10 ---
+Short Title of the Article
+Table 1
+Prediction performance comparison across different time intervals.
+Time periods Metrics Methods
+Informer LSTM Transformer GRU MLP AutoFormer LightTS Wang et al. Ours
+1 minute
+MAE 0.0534 0.0404 0.0441 0.0405 0.0511 0.0430 0.0406 0.0406 0.0400
+RMSE 0.0658 0.0526 0.0583 0.0529 0.0662 0.0552 0.0528 0.0529 0.0523
+MAPE 0.2807 0.2861 0.2727 0.2849 0.3099 0.2220 0.2928 0.2699 0.2486
+2 minutes
+MAE 0.0564 0.0347 0.0432 0.0343 0.0419 0.0421 0.0401 0.0351 0.0337
+RMSE 0.0721 0.0455 0.0542 0.0449 0.0547 0.0540 0.0512 0.0461 0.0441
+MAPE 0.2232 0.1296 0.1772 0.1377 0.1713 0.1643 0.1580 0.1341 0.1275
+5 minutes
+MAE 0.0406 0.0282 0.0458 0.0277 0.0311 0.0324 0.0376 0.0293 0.0247
+RMSE 0.0510 0.0368 0.0601 0.0360 0.0404 0.0416 0.0479 0.0387 0.0325
+MAPE 0.1551 0.1145 0.1665 0.1121 0.1229 0.1225 0.1527 0.1085 0.0887
+L a t e n c y ( S e c o n d s )
+0 5 0 2 0 0 0 . 0 0 0 . 2 5 0 . 5 0 0 . 7 5 1 . 0 0 1 . 2 5 1 . 5 0 1 . 7 5 2 . 0 0 1 0 0 L a t e n c y ( G r o u n d T r u t h ) L a t e n c y ( W a n g e t a l . ) L a t e n c y ( O u r s ) T h r o u g h p u t ( G r o u n d T r u t h ) T h r o u g h p u t ( W a n g e t a l . ) T h r o u g h p u t ( O u r s )
+1 5 0 05 0 1 0 0 1 5 0 2 0 0 2 5 0 3 0 0 3 5 0 4 0 0 4 5 0 5 0 0
+T h r o u g h p u t ( T P S )
+L a t e n c y ( S e c o n d s )
+0 5 0 2 0 0 0 . 0 0 0 . 2 5 0 . 5 0 0 . 7 5 1 . 0 0 1 . 2 5 1 . 5 0 1 . 7 5 2 . 0 0 1 0 0 L a t e n c y ( G r o u n d T r u t h ) L a t e n c y ( W a n g e t a l . ) L a t e n c y ( O u r s ) T h r o u g h p u t ( G r o u n d T r u t h ) T h r o u g h p u t ( W a n g e t a l . ) T h r o u g h p u t ( O u r s )
+1 5 0 05 0 1 0 0 1 5 0 2 0 0 2 5 0 3 0 0 3 5 0 4 0 0 4 5 0 5 0 0
+T h r o u g h p u t ( T P S )
+L a t e n c y ( S e c o n d s )
+0 5 0 2 0 0 0 . 0 0 0 . 2 5 0 . 5 0 0 . 7 5 1 . 0 0 1 . 2 5 1 . 5 0 1 . 7 5 2 . 0 0 1 0 0 L a t e n c y ( G r o u n d T r u t h ) L a t e n c y ( W a n g e t a l . ) L a t e n c y ( O u r s ) T h r o u g h p u t ( G r o u n d T r u t h ) T h r o u g h p u t ( W a n g e t a l . ) T h r o u g h p u t ( O u r s )
+1 5 0 05 0 1 0 0 1 5 0 2 0 0 2 5 0 3 0 0 3 5 0 4 0 0 4 5 0 5 0 0
+T h r o u g h p u t ( T P S )
+L a t e n c y ( S e c o n d s )
+0 5 0 2 0 0 0 . 0 0 0 . 2 5 0 . 5 0 0 . 7 5 1 . 0 0 1 . 2 5 1 . 5 0 1 . 7 5 2 . 0 0 1 0 0 L a t e n c y ( G r o u n d T r u t h ) L a t e n c y ( W a n g e t a l . ) L a t e n c y ( O u r s ) T h r o u g h p u t ( G r o u n d T r u t h ) T h r o u g h p u t ( W a n g e t a l . ) T h r o u g h p u t ( O u r s )
+1 5 0 05 0 1 0 0 1 5 0 2 0 0 2 5 0 3 0 0 3 5 0 4 0 0 4 5 0 5 0 0
+T h r o u g h p u t ( T P S )
+T r a n s a c t i o n A r r i v a l R a t e ( T P S )
+T r a n s a c t i o n A r r i v a l R a t e ( T P S )
+T r a n s a c t i o n A r r i v a l R a t e ( T P S )
+T r a n s a c t i o n A r r i v a l R a t e ( T P S )
+(a) Block size = 50
+(b) Block size = 100
+(c) Block size = 150
+(d) Block size = 200
+Figure 6: The latency and throughput prediction performance of the blockchain performance prediction model under different
+block sizes.
+Table 2
+tasks
+Performance comparison on latency and throughput prediction
+Task Method MAE RMSE MAPE
+Latency
+LR 0.1237 0.1764 0.2256
+BR 0.2547 0.3242 0.4010
+BYR 0.2520 0.3166 0.3960
+DTR 0.0218 0.0597 0.4285
+GBR 0.2273 0.2905 0.3662
+RFR 0.2700 0.3590 0.4280
+XGB 0.2308 0.2945 0.3705
+Wang et al. 0.0253 0.0481 0.0408
+Ours 0.0223 0.0519 0.0298
+Throughput
+LR 0.2095 0.2699 0.0559
+BR 0.7303 0.9448 0.1896
+BYR 0.7705 0.9593 0.1972
+DTR 0.0164 0.0443 0.1962
+GBR 0.6354 0.8230 0.1674
+RFR 0.7583 0.9984 0.1963
+XGB 0.6407 0.8325 0.1687
+Wang et al. 0.0752 0.2797 0.0973
+Ours 0.0167 0.0442 0.0037
+the effectiveness of the dynamic weighting mechanism and
+ensembledesign incapturing complex latencybehaviors.
+Throughput prediction For throughput prediction, the
+proposed model achieved superior performance, especially
+atlarger blocksizes (150and 200),whereitaccuratelycap-
+turedthenonlinearsaturationbehavior.Themodelachieved
+an MAE of 0.0167 and a MAPE of 0.0037, improving over
+bothindividualregressorsandthepriorblockchain-oriented
+predictionbaseline, as shown in Table 2.
+5.2.3. Performance of the optimization mechanism
+with DW-DQN
+This section evaluates the proposed blockchain per-
+formance optimization mechanism based on the Dynamic
+WeightDeepQ-Network(DW-DQN),focusingonimprove-
+ments in system latency and throughput. Experiments were
+conducted with four initial block sizes (50, 100, 150, and
+200) under various transaction loads (TPS). The results
+demonstrate DW-DQN’s adaptability and robustness in
+solving multi-objective optimization tasks.
+DW-DQN consistently enhances system performance
+across various TPS levels, with notable improvements ob-
+served under high-load conditions. For example, when the
+initial block size was set to 150 and TPS increased from
+60 to 140, the latency before optimization reached approx-
+imately 1.25 seconds. In contrast, DW-DQN maintained
+latencybetween0.25and0.9seconds,achievinganaverage
+improvement of54% (Figure 7).
+First Author et al.: Preprint submitted to Elsevier Page 10 of 16
+--- PAGE 11 ---
+L a t e n c y
+2 . 0 0 1 . 7 5
+1 . 5 0
+1 . 2 5
+1 . 0 0
+0 . 7 5
+0 . 5 0
+0 . 2 5
+O p t i m a l B l o c k S i z e L a t e n c y ( B l o c k S i z e = 5 0 ) L a t e n c y ( B l o c k S i z e = O p t i m a l , o u r m e t h o d )
+O p t i m a l B l o c k S i z e L a t e n c y ( B l o c k S i z e = 1 0 0 ) L a t e n c y ( B l o c k S i z e = O p t i m a l , o u r m e t h o d )
+B l o c k S i z e
+L a t e n c y
+B l o c k S i z e
+Short Title of the Article
+1 0 0 0
+9 0 0
+2 . 0 0 1 . 7 5
+1 0 0 0
+9 0 0
+8 0 0
+8 0 0
+1 . 5 0
+7 0 0
+7 0 0
+1 . 2 5
+6 0 0
+6 0 0
+5 0 0
+1 . 0 0
+5 0 0
+4 0 0
+4 0 0
+0 . 7 5
+3 0 0
+3 0 0
+0 . 5 0
+2 0 0
+2 0 0
+0 . 2 5
+1 0 0
+1 0 0
+0
+0 2 0 4 0 6 0 8 0 1 0 0 1 2 0 1 4 0 1 6 0 1 8 0 2 0 0 2 2 0 0 . 0 0
+0
+0 2 0 4 0 6 0 8 0 1 0 0 1 2 0 1 4 0 1 6 0 1 8 0 2 0 0 2 2 0 0 . 0 0
+T P S
+T P S
+(a) Block size = 50
+(b) Block size = 100
+O p t i m a l B l o c k S i z e L a t e n c y ( B l o c k S i z e = 1 5 0 ) L a t e n c y ( B l o c k S i z e = O p t i m a l , o u r m e t h o d )
+1 0 0 0
+9 0 0
+2 . 0 0 1 . 7 5
+O p t i m a l B l o c k S i z e L a t e n c y ( B l o c k S i z e = 2 0 0 ) L a t e n c y ( B l o c k S i z e = O p t i m a l , o u r m e t h o d )
+1 0 0 0
+9 0 0
+8 0 0
+8 0 0
+1 . 5 0
+7 0 0
+7 0 0
+1 . 2 5
+6 0 0
+6 0 0
+5 0 0
+1 . 0 0
+5 0 0
+4 0 0
+4 0 0
+0 . 7 5
+3 0 0
+3 0 0
+0 . 5 0
+2 0 0
+2 0 0
+0 . 2 5
+1 0 0
+1 0 0
+0
+0 2 0 4 0 6 0 8 0 1 0 0 1 2 0 1 4 0 1 6 0 1 8 0 2 0 0 2 2 0 0 . 0 0
+0
+0 2 0 4 0 6 0 8 0 1 0 0 1 2 0 1 4 0 1 6 0 1 8 0 2 0 0 2 2 0 0 . 0 0
+T P S
+T P S
+(c) Block size = 150
+(d) Block size = 200
+Figure 7: Latency optimization under different TPS and block sizes using DW-DQN.
+Table 4
+The optimization rate of optimal block size on throughput
+L a t e n c y
+2 . 0 0 1 . 7 5
+1 . 5 0
+1 . 2 5
+1 . 0 0
+0 . 7 5
+0 . 5 0
+0 . 2 5
+B l o c k S i z e
+L a t e n c y
+B l o c k S i z e
+Table 3
+The optimization rate of optimal block size on latency
+Metric Block Size
+50 100 150 200 Optimal (Ours)
+Metric Block Size
+50 100 150 200 Optimal (Ours)
+Average Latency (s) 0.62 0.87 0.93 0.93 0.43
+Optimization Rate (%) 49.78 50.73 47.36 50.09 —
+Average
+Throughput (TPS) 84.74 85.74 92.60 92.37 103.09
+Optimization Rate (%) 22.09 20.70 10.66 11.35 —
+In terms of throughput, DW-DQN outperforms fixed
+block size baselines, especially under high TPS conditions.
+Forexample,atTPS=160,DW-DQNachievedamaximum
+throughput 30% higherthanthe static approach (Figure 8).
+Tables 3 and 4 summarize the optimization rates for
+latencyandthroughput,respectively.DW-DQNsignificantly
+reduced average latency and increased throughput across
+all initial block sizes. For example, with an initial block
+size of 200, latency was reduced from 0.93 seconds to 0.43
+seconds (50.09% improvement), and throughput increased
+from 92.37 TPS to 103.09TPS (11.35% improvement).
+5.3. Ablation study
+To evaluate the contribution of individual components
+within ChainOptNet, we conducted an ablation study on
+the HFBDP dataset. The complete optimization pipeline
+was retained, while one key component was removed or
+replaced at a time. Specifically, the CFAD module was
+replaced with a standard LSTM predictor, the ensemble
+predictionframeworkwasreplacedwiththebest-performing
+individualpredictor,andthedynamicweightingmechanism
+was replaced with a fixed-weight reward design. The opti-
+mization performance was evaluated using average latency
+andaveragethroughput overall tested workload scenarios.
+To ensure a fair comparison, all ablation variants were
+evaluatedunderthesameHFBDPworkloadtraces,blockchain
+configurations, and optimization settings. The reported re-
+sultscorrespondtotheaverageperformanceacrossalltested
+transactionarrivalrates(TPS)andinitialblock-sizesettings.
+First Author et al.: Preprint submitted to Elsevier Page 11 of 16
+--- PAGE 12 ---
+T h r o u g h p u t
+2 5 0
+3 0 0 2 0 0
+1 5 0
+1 0 0
+5 0
+2 5 0
+3 0 0 2 0 0
+1 5 0
+1 0 0
+5 0
+O p t i m a l B l o c k S i z e T h r o u g h p u t ( B l o c k S i z e = 5 0 ) T h r o u g h p u t ( B l o c k S i z e = O p t i m a l , o u r m e t h o d )
+O p t i m a l B l o c k S i z e T h r o u g h p u t ( B l o c k S i z e = 1 0 0 ) T h r o u g h p u t ( B l o c k S i z e = O p t i m a l , o u r m e t h o d )
+B l o c k S i z e
+T h r o u g h p u t
+B l o c k S i z e
+Short Title of the Article
+1 0 0 0
+9 0 0
+2 5 0
+3 0 0 1 0 0 0
+9 0 0
+8 0 0
+8 0 0
+7 0 0
+7 0 0
+2 0 0
+6 0 0
+6 0 0
+5 0 0
+1 5 0
+5 0 0
+4 0 0
+4 0 0
+1 0 0
+3 0 0
+3 0 0
+2 0 0
+2 0 0
+5 0
+1 0 0
+1 0 0
+0
+0 2 0 4 0 6 0 8 0 1 0 0 1 2 0 1 4 0 1 6 0 1 8 0 2 0 0 2 2 0 0
+0
+0 2 0 4 0 6 0 8 0 1 0 0 1 2 0 1 4 0 1 6 0 1 8 0 2 0 0 2 2 0 0
+T P S
+T P S
+(a) Block size = 50
+(b) Block size = 100
+O p t i m a l B l o c k S i z e T h r o u g h p u t ( B l o c k S i z e = 1 5 0 ) T h r o u g h p u t ( B l o c k S i z e = O p t i m a l , o u r m e t h o d )
+1 0 0 0
+9 0 0
+O p t i m a l B l o c k S i z e T h r o u g h p u t ( B l o c k S i z e = 2 0 0 ) T h r o u g h p u t ( B l o c k S i z e = O p t i m a l , o u r m e t h o d )
+1 0 0 0
+9 0 0
+8 0 0
+8 0 0
+7 0 0
+7 0 0
+6 0 0
+6 0 0
+5 0 0
+5 0 0
+4 0 0
+4 0 0
+3 0 0
+3 0 0
+2 0 0
+2 0 0
+1 0 0
+1 0 0
+0
+0 2 0 4 0 6 0 8 0 1 0 0 1 2 0 1 4 0 1 6 0 1 8 0 2 0 0 2 2 0 0
+0
+0 2 0 4 0 6 0 8 0 1 0 0 1 2 0 1 4 0 1 6 0 1 8 0 2 0 0 2 2 0 0
+T P S
+T P S
+(c) Block size = 150
+(d) Block size = 200
+Figure 8: Throughput optimization under different TPS and block sizes using DW-DQN.
+T h r o u g h p u t
+B l o c k S i z e
+T h r o u g h p u t
+2 5 0
+3 0 0 2 0 0
+1 5 0
+1 0 0
+5 0
+B l o c k S i z e
+Table 5
+Ablation study results on the HFBDP dataset
+Model
+Average Latency
+(s)
+Average Throughput
+(TPS)
+Full ChainOptNet 0.43 103.09
+w/o CFAD 0.49 98.37
+w/o Ensemble Prediction 0.47 99.82
+w/o Dynamic Weighting 0.58 93.74
+AsshowninTable5,removingtheCFADmoduleleads
+tonoticeableperformancedegradation.Theaveragelatency
+increases from 0.43 s to 0.49 s, while the average through-
+put decreases from 103.09 TPS to 98.37 TPS. This result
+indicates that accurate transaction arrival rate prediction is
+essential for effectiveblock-size optimization.
+Replacing the ensemble prediction framework with a
+singlepredictoralsoreducesoptimizationperformance.Al-
+thoughthedegradationislessseverethanremovingCFAD,
+the increase in latency and decrease in throughput demon-
+strate the importance of combining heterogeneous predic-
+tion models. The inverse-error-weighted ensemble strategy
+improves prediction robustness and provides more reliable
+performanceestimatesforthe optimization module.
+The most significant performance degradation is ob-
+servedwhenthedynamicweightingmechanismisremoved
+from DW-DQN. In this case, the average latency increases
+to 0.58 s and the average throughput drops to 93.74 TPS.
+This finding confirms that adaptive reward balancing plays
+a critical role in maintaining an effective trade-off between
+latency and throughput under varyingworkload conditions.
+Overall, the results validate the necessity and comple-
+mentary effectiveness of the three major components in
+ChainOptNet. CFAD provides accurate workload forecast-
+ing,theensemblepredictionframeworkimprovesblockchain
+performance estimation, and the dynamic weighting mech-
+anism enables adaptive multi-objective optimization. To-
+gether, these components contribute to the superior perfor-
+mance achieved by the proposedframework.
+5.4. Hyperparameteranalysis
+To investigate the sensitivity of the proposed optimiza-
+tion framework to key DW-DQN hyperparameters, we con-
+ducted a comprehensive sensitivity analysis by varying the
+discountfactorandreplaybuffersizeontheHFBDPdataset.
+The corresponding latency and throughput obtained under
+different parameter settings are summarized in Table 6,
+whilethe variation trends are illustratedinFig. 9.
+First Author et al.: Preprint submitted to Elsevier Page 12 of 16
+--- PAGE 13 ---
+Short Title of the Article
+L a t e n c y ( s )
+0 . 5 6 0 . 8 0 0 . 5 2 0 . 8 5 0 . 4 9 0 . 4 7 0 . 4 6 0 . 4 4 0 . 4 3
+0 . 9 0 0 . 8 0 0 . 9 5 B e s t
+T h r o u g h p u t ( T P S )
+1 . 0 0 0 . 2 5 0 . 3 0 0 . 3 5 0 . 4 0 0 . 4 5 0 . 5 0 0 . 5 5 0 . 6 0 0 . 6 5 0 . 7 0
+9 2 . 3 4 D i s c o u n t F a c t o r ( )
+(a) Latency vs. Discount Fac-
+tor
+0 . 8 5 9 5 . 8 4 0 . 9 0 9 8 . 3 2 9 9 . 7 6 1 0 1 . 1 5 1 0 2 . 4 7 1 0 3 . 0 9
+0 . 9 5 B e s t
+L a t e n c y ( s )
+1 . 0 0 8 0 8 5 9 0 9 5 1 0 0 1 0 5 1 1 0 1 1 5 1 2 0
+0 5 0 0 0 0 . 5 4 0 . 5 1 0 . 4 9 0 . 4 7 0 . 4 5
+1 0 0 0 0 B e s t
+0 . 4 3 0 . 4 3 0 . 4 4 0 . 4 5
+T h r o u g h p u t ( T P S )
+0 5 0 0 0 1 5 0 0 0 2 0 0 0 0 0 . 2 5 0 . 3 0 0 . 3 5 0 . 4 0 0 . 4 5 0 . 5 0 0 . 5 5 0 . 6 0 0 . 6 5 0 . 7 0
+9 1 . 4 2 9 6 . 4 19 8 . 7 6 1 0 0 . 0 3 1 0 2 . 1 8 1 0 3 . 0 9 1 0 3 . 0 11 0 2 . 7 6 1 0 0 0 0 B e s t
+1 5 0 0 0 D i s c o u n t F a c t o r ( )
+R e p l a y B u f f e r S i z e
+R e p l a y B u f f e r S i z e
+(b) Throughput vs. Discount
+(c) Latency vs. Replay Buffer
+(d) Throughput vs. Replay
+Factor
+Size
+Buffer Size
+Figure 9: Sensitivity analysis of DW-DQN hyperparameters. (a) and (b) show the impact of discount factor on latency and
+throughput, respectively. (c) and (d) show the impact of replay buffer size on latency and throughput, respectively.
+1 0 2 . 3 1
+2 0 0 0 0 8 0 8 5 9 0 9 5 1 0 0 1 0 5 1 1 0 1 1 5 1 2 0
+Table 6
+Sensitivity analysis of DW-DQN hyperparameters.
+Parameter Value Latency (s) Throughput (TPS)
+𝛾 0.80 0.56 92.34
+𝛾 0.85 0.52 95.84
+𝛾 0.90 0.49 98.32
+𝛾 0.93 0.47 99.76
+𝛾 0.95 0.46 101.15
+𝛾 0.97 0.44 102.47
+𝛾 0.99 0.43 103.09
+Replay Buffer 1000 0.54 94.12
+Replay Buffer 2000 0.51 96.41
+Replay Buffer 4000 0.49 98.76
+Replay Buffer 6000 0.47 100.03
+Replay Buffer 8000 0.45 102.18
+Replay Buffer 10000 0.43 103.09
+Replay Buffer 12000 0.43 103.01
+Replay Buffer 15000 0.44 102.76
+Replay Buffer 20000 0.45 102.31
+Discountfactor(𝛾).Thediscountfactordeterminesthe
+importance of future rewards during policy learning. As
+shown in Table 6, the optimization performance improves
+steadily as 𝛾 increases from 0.80 to 0.99. Specifically, the
+average latency decreases from 0.56 s to 0.43 s, while the
+average throughput increases from 92.34 TPS to 103.09
+TPS. When 𝛾 is relatively small, the agent mainly focuses
+on immediate rewards, resulting in conservative block-size
+adjustment decisions and relatively lower optimization per-
+formance. As 𝛾 increases beyond 0.93, the agent gradu-
+ally learns more effective long-term optimization policies,
+leading to noticeable reductions in latency and continuous
+improvements in throughput. The best optimization perfor-
+manceisachievedwhen𝛾 =0.99,indicatingthatemphasiz-
+ing long-term cumulative rewards is beneficial for dynamic
+blockchain parameteroptimization.
+Replay buffer size. The replay buffer size controls the
+number of historical experiences used for network updates.
+As the replay buffer size increases from 1000 to 10000,
+both latency and throughput are continuously improved.
+In particular, the average latency decreases from 0.54 s to
+0.43 s, while the throughput increases from 94.12 TPS to
+103.09TPS.Thisimprovementdemonstratesthatalargerre-
+play buffer provides more diverse training samples, thereby
+improvingpolicystabilityandconvergence.However,when
+the replay buffer size exceeds 10000, the performance gain
+becomes marginal. Although the replay buffer continues
+to increase to 12000, 15000, and 20000, the throughput
+remainsalmostunchangedwhilethelatencyexhibitsaslight
+increase. This observation suggests that excessively large
+replaymemoriesintroduceadditionalstorageoverheadwith-
+outprovidingsignificantimprovementsinoptimizationper-
+formance.
+Overall, the proposed DW-DQN framework demon-
+strates stable optimization performance under different hy-
+perparameter settings. Both the discount factor and replay
+buffer size exhibit clear convergence trends, indicating that
+the proposed optimization strategy is relatively robust to
+hyperparameter variations. Based on the above analysis, a
+discount factor of 0.99 and a replay buffer size of 10000
+are selected for all subsequent experiments, as they provide
+the best trade-off between optimization effectiveness and
+computational efficiency.
+5.5. Comparative analysis
+Figure 10 shows that the proposed DW-DQN method
+consistently outperforms representative prediction-driven,
+score-based optimization methods across varying transac-
+tion loads, particularly under high-TPS conditions. As TPS
+increases, the latency reduction achieved by this class of
+baselines gradually plateaus, whereas DW-DQN continues
+to reduce latency significantly. For example, at TPS = 200,
+DW-DQNachievesasubstantiallatencyreductioncompared
+with the reference score-based strategy, demonstrating su-
+perioradaptabilitytoperformancedegradationunderheavy
+workloads.
+As the transaction load increases, the performance gap
+between DW-DQN and the score-based baselines becomes
+increasinglyevident.Underlow-loadconditions,bothtypes
+ofmethodsachieverelativelylowlatencysincetheblockchain
+network is not heavily congested. However, as TPS exceeds
+120, score-based strategies gradually lose their ability to
+effectively adapt to rapidly changing workloads, resulting
+First Author et al.: Preprint submitted to Elsevier Page 13 of 16
+--- PAGE 14 ---
+1 . 5 0
+1 . 2 5
+L a t e n c y : B a s e l i n e ( W a n g e t a l . ) L a t e n c y : O p t i m i z a t i o n ( W a n g e t a l . ) L a t e n c y : B a s e l i n e ( O u r s ) L a t e n c y : O p t i m i z a t i o n ( O u r s )
+1 . 0 0
+L a t e n c y ( S e c o n d s )
+0 . 7 5
+Short Title of the Article
+to process more transactions without introducing excessive
+communication or confirmationdelays.
+The superior performance can be attributed to DW-
+DQN’sabilitytoeffectivelymodelthenonlinearrelationship
+amongtransactionload,blocksize,andsystemperformance.
+Furthermore, the incorporation of experience replay and a
+discrete action space enhances training stability and facil-
+itates smoother policy convergence, enabling the learned
+policy to generalize well under dynamic blockchain work-
+loads. Overall, the experimental results demonstrate that
+the proposed optimization framework not only improves
+latency and throughput simultaneously, but also exhibits
+strong scalability and robustness under diverse transaction
+2 0 4 0 6 0 8 0 1 0 0 1 2 0 1 4 0 1 6 0 1 8 0 2 0 0 0 . 0 0
+workloads, making it well suited for practical blockchain
+T r a n s a c t i o n A r r i v a l R a t e ( T P S )
+deploymentscenarios.
+Figure 10: Latency comparison under different TPS.
+0 . 5 0
+0 . 2 5
+1 6 0 1 8 0 T h r o u g h p u t : B a s e l i n e ( W a n g e t a l . ) T h r o u g h p u t : O p t i m i z a t i o n ( W a n g e t a l . ) T h r o u g h p u t : B a s e l i n e ( O u r s ) T h r o u g h p u t : O p t i m i z a t i o n ( O u r s )
+T h r o u g h p u t ( T P S )
+2 0 4 0 6 0 8 0 1 0 0 1 2 0 1 4 0 T r a n s a c t i o n A r r i v a l R a t e ( T P S )
+Figure 11: Throughput comparison under different TPS.
+in a noticeable increase in latency. In contrast, DW-DQN
+maintains consistently lower latency by continuously ad-
+justing the block size according to the current network
+state, demonstrating stronger adaptability under dynamic
+blockchain environments.
+Figure 11 further illustrates that DW-DQN consistently
+achieves higher throughput than the score-based baselines
+acrossalltestedTPSlevels,withparticularlynoticeableim-
+provementsundermedium-andhigh-loadscenarios(TPS>
+100).Forinstance,atTPS=180andTPS=200,DW-DQN
+improves throughput by approximately 25 TPS compared
+withthereferencescore-basedstrategy,demonstratingbetter
+scalability in transaction-intensive environments.
+Asimilartrendcanalsobeobservedintermsofthrough-
+put. As the transaction arrival rate increases, DW-DQN
+maintainsstablethroughputgrowthwhilescore-basedstrate-
+gies exhibit performance saturation. This indicates that the
+proposed optimization strategy can better exploit the avail-
+ablenetworkresourcesbydynamicallyselectingappropriate
+block sizes. Consequently, the blockchain system is able
+6. Conclusion
+2 0 0 0 2 0 4 0 6 0 8 0 1 0 0 1 2 0 1 4 0 1 6 0 1 8 0 2 0 0
+This paper introduces ChainOptNet, a comprehensive
+blockchainperformanceoptimizationframeworkthatachieves
+significant system improvements by leveraging three key
+technical innovations. First, for transaction arrival rate pre-
+diction,weintroducetheConvolutionalFeatureAggregation
+and Distribution (CFAD) model, which leverages a novel
+deep learning architecture to effectively capture temporal
+dependencies and complex distributional patterns in trans-
+action data. Second, in the domain of performance predic-
+tion, a multi-model collaborative framework is proposed to
+improve predictive accuracy and robustness by intelligently
+combining heterogeneous machine learning models. Third,
+the Dynamic Weight Deep Q-Network (DW-DQN) serves
+as the optimization mechanism, combining a DQN-based
+block-size controller with a trend-aware dynamic reward
+weighting module to support real-time adaptive block-size
+adjustment and balanced optimization across multiple ob-
+jectives.
+Extensive experimental evaluations demonstrate the ef-
+fectivenessoftheproposedframework.Theresultsshowthat
+ChainOptNet improves latency reduction and throughput
+enhancement compared with representative forecasting, re-
+gression,ensemble-learning,fixed-configuration,andscore-
+based optimization baselines, while maintaining high op-
+timization efficiency across varying transaction loads. The
+framework has a high degree of generalization and adapt-
+ability,makingitsuitableforuseinawiderangeofdynamic
+blockchain environments.
+Future research will investigate several promising di-
+rectionstoimproveChainOptNet’sapplicabilityandperfor-
+mance. These include: (1) lightweight optimization algo-
+rithms to reduce computational overhead, (2) extending the
+frameworktosupportcross-chainperformanceoptimization
+in heterogeneous public chain ecosystems, (3) designing
+scenario-specific optimization strategies tailored to particu-
+larapplicationdomains,(4)incorporatingadvancedsecurity
+andprivacymechanismsduringoptimizationprocesses,and
+(5) improving system adaptability. These future efforts are
+First Author et al.: Preprint submitted to Elsevier Page 14 of 16
+--- PAGE 15 ---
+Short Title of the Article
+intended to accelerate the practical deployment of high-
+performance, intelligentblockchaininfrastructure.
+CRediT authorshipcontributionstatement
+Author 1: Conceptualization, Methodology, Writing -
+finaldraft.Author2:carryingoutexperimentsandWriting-
+originaldraft.Theremainingauthorscontributedtovalidat-
+ingtheideas,carryingoutadditionalanalysesandreviewing
+this paper.All authorsreadand approved themanuscript.
+Data availability
+Data willbemade availableon request.
+Declarationofcompetinginterest
+Theauthorsdeclarethattheyhavenoknowncompeting
+financial interests or personal relationships that could have
+appeared toinfluencethe workreported inthis paper.
+Acknowledgements
+This work wassupportedby the...
+References
+[1] Lingyan Xue, Haiping Huang, Fu Xiao, Qi Li, and Zhiwei Wang.
+A privacy-enhanced traceable anonymous transaction scheme for
+blockchain. IEEE Transactions on Information Forensics and Secu-
+rity, 20:1176–1191, 2025.
+[2] Oluwafemi Akanfe, Diane Lawong, and H Raghav Rao. Blockchain
+technology and privacy regulation: Reviewing frictions and synthe-
+sizing opportunities. International Journal of Information Manage-
+ment, 76:102753, 2024.
+[3] Wanqing Jie, Wangjie Qiu, Arthur Sandor Voundi Koe, Jianhong Li,
+YinWang,YaqiWu,JinLi,andZhimingZheng.Asecureandflexible
+blockchain-based offline payment protocol. IEEE Transactions on
+Computers, 73(2):408–421, 2023.
+[4] Li Lin, Jiapeng Wu, Zhi Zhou, Jin Zhao, Peng Li, and Jinbo Xiong.
+Computing power networking meets blockchain: A reputation-
+enhanced trading framework for decentralized iot cloud services.
+IEEE Internet of Things Journal, 11(10):17082–17096, 2024.
+[5] Yuming Huang, Xiangyu Li, Yuehan Wu, Chaoyang Xue, Jiashuo
+Li, Yongfeng Lin, Wei Nie, Xian Liu, Qian Liu, Greg Michalski,
+et al. Blockchain-based isotopic big data-driven tracing of global
+pm sources and interventions. Nature Communications, 16(1):3901,
+2025.
+[6] DiZhang,JunqingLe,XinyuLei,TaoXiang,andXiaofengLiao. Se-
+cureredactableblockchainwithdynamicsupport. IEEE Transactions
+on Dependable and Secure Computing, 21(2):717–731, 2023.
+[7] Jie Xu, Cong Wang, and Xiaohua Jia. A survey of blockchain
+consensus protocols. ACM Computing Surveys, 55(13s):1–35, 2023.
+[8] QingQiu Gan and Raymond Yiu Keung Lau. Trust in a ‘trust-
+free’system:Blockchainacceptanceinthebankingandfinancesector.
+Technological forecasting and social change, 199:123050, 2024.
+[9] Mohd Javaid, Abid Haleem, Ravi Pratap Singh, Rajiv Suman, and
+Shahbaz Khan. A review of blockchain technology applications
+for financial services. BenchCouncil transactions on benchmarks,
+standards and evaluations, 2(3):100073, 2022.
+[10] RuibiaoChen,FangxingShu,ShuokangHuang,LeiHuang,Huafang
+Liu, Jin Liu, and Kai Lei. Bidm: A blockchain-enabled cross-
+domain identity management system. Journal of Communications
+and Information Networks, 6(1):44–58, 2021.
+First Author et al.: Preprint submitted to Elsevier [11] Jie Cui, Yatao Li, Qingyang Zhang, Hong Zhong, Chengjie Gu, and
+Debiao He. Dschain: A blockchain system for complete lifecycle se-
+curityofdataininternetofthings. IEEE Transactions on Dependable
+and Secure Computing, 21(4):3977–3993, 2023.
+[12] Sadia Ramzan, Aqsa Aqdus, Vinayakumar Ravi, Deepika Koundal,
+RashidAmin,andMohammedAAlGhamdi.Healthcareapplications
+using blockchain technology: Motivations and challenges. IEEE
+Transactions on Engineering Management, 70(8):2874–2890, 2022.
+[13] Keke Gai, Yue Zhang, Meikang Qiu, and Bhavani Thuraisingham.
+Blockchain-enabled service optimizations in supply chain digital
+twin. IEEE Transactions on Services Computing, 16(3):1673–1685,
+2022.
+[14] Keke Gai, Yulu Wu, Liehuang Zhu, Meikang Qiu, and Meng Shen.
+Privacy-preserving energy trading using consortium blockchain in
+smartgrid.IEEE Transactions on Industrial Informatics,15(6):3548–
+3558, 2019.
+[15] JunqinHuang,LingheKong,LongCheng,Hong-NingDai,Meikang
+Qiu, Guihai Chen, Xue Liu, and Gang Huang. Blocksense: Towards
+trustworthymobilecrowdsensingviaproof-of-datablockchain. IEEE
+Transactions on Mobile Computing, 23(2):1016–1033, 2022.
+[16] Ammar Ibrahim El Sayed, Mahmoud Abdelaziz, Mohamed Hussein,
+and Ashraf D Elbayoumy. Ddos mitigation in iot using machine
+learningandblockchainintegration. IEEE Networking Letters,2024.
+[17] BakkiamDavidDeebak,FidaHussainMemon,SunderAliKhowaja,
+Kapal Dev, Weizheng Wang, Nawab Muhammad Faseeh Qureshi,
+and Chunhua Su. A lightweight blockchain-based remote mutual
+authentication for ai-empowered iot sustainable computing systems.
+IEEE Internet of Things Journal, 10(8):6652–6660, 2022.
+[18] Shen Wang, Ahmad F Taha, Jianhui Wang, Karla Kvaternik, and
+Adam Hahn. Energy crowdsourcing and peer-to-peer energy trading
+in blockchain-enabled smart grids. IEEE Transactions on Systems,
+Man, and Cybernetics: Systems, 49(8):1612–1623, 2019.
+[19] Zhenyu Zhou, Bingchen Wang, Mianxiong Dong, and Kaoru Ota.
+Secure and efficient vehicle-to-grid energy trading in cyber physi-
+cal systems: Integration of blockchain and edge computing. IEEE
+Transactions on Systems, Man, and Cybernetics: Systems, 50(1):43–
+57, 2019.
+[20] TranVietKhoa,DoHaiSon,DinhThaiHoang,NguyenLinhTrung,
+Tran Thi Thuy Quynh, Diep N Nguyen, Nguyen Viet Ha, and Eryk
+Dutkiewicz. Collaborative learning for cyberattack detection in
+blockchain networks. IEEE Transactions on Systems, Man, and
+Cybernetics: Systems, 54(7):3920–3933, 2024.
+[21] Gi Seok Park and Hwangjun Song. Watchdog: Network-aware
+consensus protocol for enhancing scalability of public blockchains.
+IEEE Internet of Things Journal, 2024.
+[22] Jemin Andrew Choi, Sidi Mohamed Beillahi, Srisht Fateh Singh,
+PanagiotisMichalopoulos,PeilunLi,AndreasVeneris,andFanLong.
+Lmpt: A novel authenticated data structure to eliminate storage bot-
+tlenecks for high performance blockchains. IEEE Transactions on
+Network and Service Management, 21(2):1333–1343, 2023.
+[23] WeiLiu,ZhiguoWan,JunShao,andYongYu. Hypermaze:Towards
+privacy-preserving and scalable permissioned blockchain. IEEE
+Transactions on Dependable and Secure Computing,20(1):360–376,
+2021.
+[24] Satoshi Nakamoto. Bitcoin: A peer-to-peer electronic cash system.
+2008.
+[25] Vitalik Buterin et al. Ethereum white paper. GitHub repository, 1
+(22-23):5–7, 2013.
+[26] AklimaBegum,MosaSumaiyaKhatunMunira,andShaharimaJuthi.
+Systematic review of blockchain technology in trade finance and
+banking security. American Journal of Scholarly Research and
+Innovation, 1(01):25–52, 2022.
+[27] Qinyin Ni, Zhang Linfeng, Xiaorong Zhu, and Inayat Ali. A novel
+design method of high throughput blockchain for 6g networks: Per-
+formance analysis and optimization model. IEEE Internet of Things
+Journal, 9(24):25643–25659, 2022.
+[28] MinAn,XuanZhang,JishuWang,QiyuanFan,ChenGao,LinyuLi,
+Cuizhen Lu, Nan Li, and Yingchen Liu. Rlchain: A drl approach for
+Page 15 of 16
+--- PAGE 16 ---
+Short Title of the Article
+blockchainperformanceoptimizationtowardsiiot.IEEE Transactions
+on Network and Service Management, 2024.
+[29] Jianing Chen, Jun Wu, Haoran Liang, Shahid Mumtaz, Jianhua Li,
+Kostromitin Konstantin, Ali Kashif Bashir, and Raheel Nawaz. Col-
+laborative trust blockchain based unbiased control transfer mech-
+anism for industrial automation. IEEE Transactions on Industry
+Applications, 56(4):4478–4488, 2019.
+[30] YuhanYang,JingWu,ChengnianLong,WeiLiang,andYi-BingLin.
+Blockchain-enabled multiparty computation for privacy preserving
+and public audit in industrial iot. IEEE Transactions on Industrial
+Informatics, 18(12):9259–9267, 2022.
+[31] Guoqiong Liao, Hao Ding, Chuanling Zhong, and Yinxiang Lei. Rt-
+dag:Adag-basedblockchainsupportingreal-timetransactions. IEEE
+Internet of Things Journal, 2024.
+[32] Jie Xu, Qingyuan Xie, Sen Peng, Cong Wang, and Xiaohua Jia.
+Adaptchain:Adaptivescalingblockchainwithtransactiondeduplica-
+tion. IEEE Transactions on Parallel and Distributed Systems, 34(6):
+1909–1922, 2023.
+[33] Ningjie Gao, Ru Huo, Shuo Wang, Tao Huang, and Yunjie Liu.
+Sharding-hashgraph: A high-performance blockchain-based frame-
+work for industrial internet of things with hashgraph mechanism.
+IEEE Internet of Things Journal, 9(18):17070–17079, 2021.
+[34] WeishanZhang,GangSun,LiangXu,QinghuaLu,HuanshengNing,
+PeiyingZhang,and SuYang. Atrustworthysafetyinspection frame-
+workusingperformance-securitybalancedblockchain. IEEE Internet
+of Things Journal, 9(11):8178–8190, 2021.
+[35] Xiaohai Dai, Zhaonan Zhang, Zhengxuan Guo, Chaozheng Ding,
+Jiang Xiao, Xia Xie, Rui Hao, and Hai Jin. Wahoo: A dag-based bft
+consensus withlow latency andlow communicationoverhead. IEEE
+Transactions on Information Forensics and Security, 2024.
+[36] Jinmian Chen, Yukun Cheng, Zhiqi Xu, and Yan Cao. Decision on
+blocksizeinblockchainsystemsbyevolutionaryequilibriumanalysis.
+Theoretical Computer Science, 942:93–106,2023.
+[37] Maruf Monem, Md Tamjid Hossain, Md Golam Rabiul Alam,
+Md Shirajum Munir, Md Mahbubur Rahman, Salman A AlQahtani,
+Samah Almutlaq, and Mohammad Mehedi Hassan. A sustainable
+bitcoin blockchain network through introducing dynamic block size
+adjustment using predictive analytics. Future Generation Computer
+Systems, 153:12–26, 2024.
+[38] Faisal Jamil, Shabir Ahmad, Taeg Keun Whangbo, Ammar
+Muthanna, and Do-Hyeun Kim. Improving blockchain performance
+in clinical trials using intelligent optimal transaction traffic control
+mechanisminsmarthealthcareapplications. Computers & Industrial
+Engineering, 170:108327, 2022.
+[39] Xuan Chen, Kien Nguyen, and Hiroo Sekiya. formance in private blockchain networks. On the latency per-
+IEEE Internet of Things
+Journal, 9(19):19246–19259, 2022.
+[40] FrancescWilhelmi,SergioBarrachina-Muñoz,andPaoloDini. End-
+to-end latency analysis and optimal block size of proof-of-work
+blockchain applications. IEEE Communications Letters, 26(10):
+2332–2335, 2022.
+[41] Jishu Wang, Chao Zhu, Chen Miao, Rui Zhu, Xuan Zhang, Yahui
+Tang, Hexiang Huang, and Chen Gao. Bpr: Blockchain-enabled
+efficient and secure parking reservation framework with block size
+dynamicadjustmentmethod. IEEE Transactions on Intelligent Trans-
+portation Systems, 24(3):3555–3570, 2022.
+[42] Jishu Wang, Yaowei Wang, Xuan Zhang, Zhi Jin, Chao Zhu, Linyu
+Li, Rui Zhu, and Shenglong Lv. Learningchain: A highly scalable
+and applicable learning-based blockchain performance optimization
+framework.IEEE Transactions on Network and Service Management,
+21(2):1817–1831, 2023.
+[43] Mingzhe Li, Wei Wang, and Jin Zhang. Lb-chain: Load-balanced
+and low-latency blockchain sharding via account migration. IEEE
+Transactions on Parallel and Distributed Systems,34(10):2797–2810,
+2023.
+Jian Li. [44] Meiqi Li, Xinyi Luo, Kaiping Xue, Yingjie Xue, Wentuo Sun, and
+A secure and efficient blockchain sharding scheme via
+hybrid consensus and dynamic management. IEEE Transactions on
+First Author et al.: Preprint submitted to Elsevier Information Forensics and Security, 2024.
+[45] Md Mainul Islam, Mpyana Mwamba Merlec, and Hoh Peter In.
+Proof of random leader: A fast and manipulation-resistant proof-of-
+authority consensus algorithm for permissioned blockchains using
+verifiable random function. IEEE Transactions on Services Comput-
+ing, 2025.
+[46] Zhongteng Cai, Junyuan Liang, Wuhui Chen, Zicong Hong, Hong-
+Ning Dai, Jianting Zhang, and Zibin Zheng. Benzene: Scaling
+blockchain with cooperation-based sharding. IEEE Transactions on
+Parallel and Distributed Systems, 34(2):639–654, 2022.
+[47] WeiYang,WeilinChen,LideXue,WenjieZou,andLiushengHuang.
+Ezchain: A secure scalable blockchain protocol via passive sharding.
+IEEE Transactions on Dependable and Secure Computing, 2024.
+[48] Yizhong Liu, Xinxin Xing, Haosu Cheng, Dawei Li, Zhenyu Guan,
+JianweiLiu,andQianhongWu. Aflexibleshardingblockchainproto-
+colbasedoncross-shardbyzantinefaulttolerance.IEEE Transactions
+on Information Forensics and Security, 18:2276–2291, 2023.
+[49] Linpeng Jia, Yanxiu Liu, Keyuan Wang, and Yi Sun. Estuary: A
+lowcross-shardblockchainshardingprotocolbasedonstatesplitting.
+IEEE Transactions on Parallel and Distributed Systems, 35(3):405–
+420, 2024.
+[50] Jie Xu, Yulong Ming, Zihan Wu, Cong Wang, and Xiaohua Jia. X-
+shard: Optimistic cross-shard transaction processing for sharding-
+based blockchains. IEEE Transactions on Parallel and Distributed
+Systems, 35(4):548–559, 2024.
+[51] Jiewu Leng, Douxi Yan, Qiang Liu, Kailin Xu, J Leon Zhao, Rui
+Shi, Lijun Wei, Ding Zhang, and Xin Chen. Manuchain: Combining
+permissioned blockchain with a holistic optimization model as bi-
+level intelligence for smart manufacturing. IEEE Transactions on
+Systems, Man, and Cybernetics: Systems, 50(1):182–192, 2019.
+[52] Alexander Marsalek, Thomas Zefferer, Edona Fasllija, and Do-
+minik Ziegler. Tackling data inefficiency: Compressing the bitcoin
+blockchain. In 2019 18th IEEE international conference on trust,
+security and privacy in computing and communications/13th IEEE
+international conference on big data science and engineering (trust-
+com/bigdatase), pages 626–633. IEEE, 2019.
+[53] Aolin Xu and Maxim Raginsky. Information-theoretic analysis of
+generalization capability of learning algorithms. Advances in neural
+information processing systems, 30, 2017.
+[54] Lu Han, Xu-Yang Chen, Han-Jia Ye, and De-Chuan Zhan. Softs:
+Efficient multivariate time series forecasting with series-core fusion.
+arXiv preprint arXiv:2404.14197, 2024.
+Page 16 of 16

@@ -1,0 +1,55 @@
+--- a/paper1-cas-dc.tex
++++ b/paper1-cas-dc.tex
+@@ -166,8 +166,8 @@
+ %	\cortext[cor1]{Corresponding authors: Jun Liu (liujun@cqupt.edu.cn), Mingwei Lin (linmwcs@163.com)}
+ 	\begin{abstract}
+ 		Blockchain has emerged as a transformative technology with numerous applications due to its tamper-proof, traceable, and decentralized architecture. Nonetheless, its performance remains constrained, particularly in areas such as latency and throughput, which pose significant barriers to large-scale deployment. This paper proposes ChainOptNet, a novel blockchain system performance optimization framework that addresses these challenges with three key technical contributions. First, we develop the Convolutional Feature Aggregation and Distribution (CFAD) model to forecast transaction arrival rates. This model uses a deep learning architecture to capture transaction data's temporal dependencies and complex statistical patterns. Second, we present a multi-model collaborative framework for blockchain performance prediction that improves predictive accuracy and robustness by intelligently integrating diverse machine learning models. Third, we create a Dynamic Weight Deep Q-Network (DW-DQN) optimization mechanism that combines a DQN-based block-size controller with a trend-aware dynamic reward weighting module for balanced multi-objective optimization. 
+-		Extensive experimental evaluations demonstrate that ChainOptNet significantly improves both latency and throughput across a wide range of load conditions, consistently outperforming representative forecasting, regression, ensemble-learning, and score-based optimization baselines.
+-		Across the evaluated workload settings, ChainOptNet reduces average transaction latency by up to 21.4\% and improves throughput by up to 18.7\% compared with the best-performing baseline among the evaluated categories. These results demonstrate the framework’s scalability, adaptability, and strong potential for practical deployment in diverse blockchain environments.
++		Experimental evaluations show that CFAD achieves the lowest MAE and RMSE at all three evaluated time intervals, while the performance prediction ensemble achieves the lowest MAPE for both latency and throughput. The optimization module also reduces average latency and increases average throughput relative to the evaluated fixed block-size configurations.
++		The reported latency optimization rate reaches 50.73\% relative to a fixed block size of 100, while the reported throughput optimization rate reaches 22.09\% relative to a fixed block size of 50. These results demonstrate the framework’s scalability, adaptability, and strong potential for practical deployment in diverse blockchain environments.
+ 	\end{abstract}
+ 	
+ 	
+@@ -680,7 +680,7 @@
+ To evaluate the generalization capability and robustness of the proposed Convolutional Feature Aggregation and Distribution (CFAD) model in predicting transaction arrival rates, experiments were conducted at three temporal granularities: 1-minute, 2-minute, and 5-minute intervals.
+ 
+ 
+-As shown in Figure~\ref{fig:time_forecast_results} and Table~\ref{tab:time_method_comparison}, CFAD consistently outperforms several existing methods across all time scales tested. This superior performance is attributed to CFAD's global one-dimensional convolution-based sequence encoder, which preserves the inherent sequential structure of transaction data, allowing for better capture of fine-grained temporal dependencies and improved responsiveness to sudden fluctuations.
++As shown in Figure~\ref{fig:time_forecast_results} and Table~\ref{tab:time_method_comparison}, CFAD achieves the lowest MAE and RMSE at all three evaluated time intervals and the lowest MAPE at the 2-minute and 5-minute intervals. At the 1-minute interval, Autoformer achieves a lower MAPE (0.2220) than CFAD (0.2486). CFAD's MAE and RMSE results are attributed to its global one-dimensional convolution-based sequence encoder, which preserves the inherent sequential structure of transaction data, allowing for better capture of fine-grained temporal dependencies and improved responsiveness to sudden fluctuations.
+ 
+ \begin{figure}
+ 	\centering
+@@ -722,7 +722,7 @@
+ 
+ 
+ In the 5-minute prediction scenario, CFAD achieved significant improvements in MAE, RMSE, and MAPE compared with representative temporal forecasting and blockchain-oriented prediction baselines. %This is due to CFAD's dual-stage convolutional architecture, which effectively extracts global trends and modulates features for fine-grained predictions. 
+-CFAD also demonstrated strong robustness during high-variance periods, reducing error variance by 4.92\% compared with the prior blockchain-oriented prediction baseline. This robustness is attributed to its multi-scale convolutional structure and integrated gating mechanism, which enhance predictive stability under non-stationary conditions.
++Specifically, Table~\ref{tab:time_method_comparison} reports that, at the 5-minute interval, CFAD reduces MAE from 0.0293 to 0.0247, RMSE from 0.0387 to 0.0325, and MAPE from 0.1085 to 0.0887 compared with the prior blockchain-oriented prediction baseline.
+ 
+ %From a practical deployment perspective, CFAD demonstrated consistent performance across varying prediction intervals, with a MAPE standard deviation of only 0.0799, significantly lower than the average fluctuation observed among baseline models (0.0923). This consistency demonstrates the model's ability to generalize across temporal resolutions and adapt to different network loads, enhancing its real-world applicability.
+ 
+@@ -733,7 +733,7 @@
+ %The dataset was divided into training, validation, and test sets (7:2:1) with five-fold cross-validation.
+ 
+ 
+-As shown in Figure~\ref{fig:performance_forecast_results} and Table~\ref{tab:performance}, the proposed framework outperformed several categories of baseline methods, including traditional regression models (e.g., Linear Regression, Bayesian Ridge, Decision Tree Regression), ensemble-based learners (e.g., Gradient Boosting Regression, Random Forest Regression, XGBoost), and prior blockchain-oriented prediction methods \citep{wang2023learningchain}. Evaluations were conducted under various system configurations with block sizes of 50, 100, 150, and 200, and across a wide range of transaction arrival rates (TPS).
++As shown in Figure~\ref{fig:performance_forecast_results} and Table~\ref{tab:performance}, the proposed framework achieves the lowest MAPE for both latency and throughput prediction and the lowest RMSE for throughput prediction among the evaluated methods. DTR achieves the lowest MAE for both prediction tasks, while the prior blockchain-oriented prediction method \citep{wang2023learningchain} achieves the lowest latency RMSE. Evaluations were conducted under various system configurations with block sizes of 50, 100, 150, and 200, and across a wide range of transaction arrival rates (TPS).
+ 
+ \begin{table}
+ 	\centering
+@@ -815,12 +815,12 @@
+ 
+ \paragraph{Latency prediction}
+ 
+-The proposed model achieved the lowest MAE (0.0223) and MAPE (0.0298) among the compared regression, ensemble-learning, and blockchain-oriented prediction baselines, as shown in Table~\ref{tab:performance}. This demonstrates the effectiveness of the dynamic weighting mechanism and ensemble design in capturing complex latency behaviors.
++As shown in Table~\ref{tab:performance}, the proposed model achieved the lowest latency MAPE (0.0298), with an MAE of 0.0223 and an RMSE of 0.0519. DTR achieved a lower MAE (0.0218), while the prior blockchain-oriented prediction baseline achieved a lower RMSE (0.0481). Thus, the proposed model performed best on latency MAPE, but not on MAE or RMSE.
+ 
+ 
+ \paragraph{Throughput prediction}
+ 
+-For throughput prediction, the proposed model achieved superior performance, especially at larger block sizes (150 and 200), where it accurately captured the nonlinear saturation behavior. The model achieved an MAE of 0.0167 and a MAPE of 0.0037, improving over both individual regressors and the prior blockchain-oriented prediction baseline, as shown in Table~\ref{tab:performance}.
++For throughput prediction, Table~\ref{tab:performance} shows that the proposed model achieved the lowest RMSE (0.0442) and MAPE (0.0037). Its MAE of 0.0167 was slightly higher than that of DTR (0.0164), although lower than those of the other evaluated baselines. The proposed model therefore performed best on throughput RMSE and MAPE, but not on MAE.
+ 
+ \begin{figure*}[t]
+ 	\centering
